@@ -389,17 +389,21 @@
         <div class="columns is-centered has-text-centered">
           <div class="content">
             <h2 class="title is-3">Benchmark: OSWorld-G</h2>
-            <p>
-              Real-world difficulties that cause the problems in pushing the
-              boundary are still left behind and typically emerge when adjusting
-              subtle UI details—such as precisely positioning a volume slider,
-              dragging the bottom-right corner of a spreadsheet cell, or locking
-              and resizing edges and vertices in a presentation slide.
-              We design to address these practical, fine-grained tasks
-              encountered across modern operating systems and software. In
-              total, we collect 564 samples, annotated with 32 different
-              UI-types, each with a paraphrased instruction that requires no
-              software knowledge to execute. </p>
+            <div class="content has-text-justified">
+              <p>
+                Real-world difficulties that cause the problems in pushing the
+                boundary are still left behind and typically emerge when
+                adjusting
+                subtle UI details—such as precisely positioning a volume slider,
+                dragging the bottom-right corner of a spreadsheet cell, or
+                locking
+                and resizing edges and vertices in a presentation slide.
+                We design to address these practical, fine-grained tasks
+                encountered across modern operating systems and software. In
+                total, we collect 564 samples, annotated with 32 different
+                UI-types, each with a paraphrased instruction that requires no
+                software knowledge to execute. </p>
+            </div>
           </div>
         </div>
       </div>
@@ -413,21 +417,25 @@
         <div class="column  is-centered has-text-centered">
           <div class="content">
             <h2 class="title is-3">Dataset: Jedi</h2>
-            <p>
-              To enable robust GUI grounding, we construct the world's largest
-              multimodal dataset tailored for computer-use grounding scenarios,
-              containing 4 million examples newly synthesized examples.
-              Our grounding data collection process centers on gathering pairs
-              of
-              screenshots and metadata (information such as filename, rendering
-              code, element bounding box, etc.), which are then further
-              transformed
-              into training data which contains queries and corresponding
-              answers
-              for VLMs to learn from it.
-            </p>
+            <div class="content has-text-justified">
+              <p>
+                To enable robust GUI grounding, we construct the world's largest
+                multimodal dataset tailored for computer-use grounding
+                scenarios,
+                containing 4 million examples newly synthesized examples.
+                Our grounding data collection process centers on gathering pairs
+                of
+                screenshots and metadata (information such as filename,
+                rendering
+                code, element bounding box, etc.), which are then further
+                transformed
+                into training data which contains queries and corresponding
+                answers
+                for VLMs to learn from it.
+              </p>
+            </div>
 
-            <img src="./static/images/data_construction.pdf"
+            <img src="./static/images/data_construction.png"
               alt="Data Construction" width="100%">
           </div>
         </div>
@@ -440,7 +448,7 @@
     <section class="section">
       <div class="container is-max-desktop">
 
-        <div class="column">
+        <div class="column  is-centered has-text-centered">
           <div class="content">
             <h2 class="title is-3">Results</h2>
             <h3 class="title is-4">Grounding Ability</h3>
@@ -477,6 +485,11 @@
               }
               .best-score {
                 font-weight: 700;
+              }
+              .span-two-columns {
+                text-align: center;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
               }
             </style>
             <div class="table-container">
@@ -542,40 +555,46 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td colspan="2" class="model-name">GPT-4o</td>
+                    <td colspan="2"
+                      class="model-name span-two-columns">GPT-4o</td>
                     <td>5.0</td>
                     <td>9.4</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name">Kimi-VL (15 steps)</td>
+                    <td colspan="2" class="model-name span-two-columns">Kimi-VL
+                      (15 steps)</td>
                     <td>8.2</td>
                     <td>10.4</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name">Aguvis-72B (15
+                    <td colspan="2"
+                      class="model-name span-two-columns">Aguvis-72B (15
                       steps)</td>
                     <td>10.3</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name">UI-TARS-72B (50
+                    <td colspan="2"
+                      class="model-name span-two-columns">UI-TARS-72B (50
                       steps)</td>
                     <td>22.7</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name">Operator (15 steps)</td>
+                    <td colspan="2" class="model-name span-two-columns">Operator
+                      (15 steps)</td>
                     <td>19.7</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name">Operator (50 steps)</td>
+                    <td colspan="2" class="model-name span-two-columns">Operator
+                      (50 steps)</td>
                     <td>32.6</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name">Claude 3.7 Sonnet (50
-                      steps)</td>
+                    <td colspan="2" class="model-name span-two-columns">Claude
+                      3.7 Sonnet (50 steps)</td>
                     <td>26.0</td>
                     <td>-</td>
                   </tr>
