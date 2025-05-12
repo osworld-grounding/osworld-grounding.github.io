@@ -1,5 +1,7 @@
 <!-- TODO: decide which to put for benchmark page -->
 <!-- TODO: Add osworld showcase, and we don't need title -->
+<!-- TODO: Add some eval -->
+<!-- TODO: Operator actually performs best in osworld -->
 
 <!DOCTYPE html>
 <html>
@@ -323,18 +325,12 @@
             <h2 class="title is-3">Benchmark: OSWorld-G</h2>
             <div class="content has-text-justified">
               <p>
-                Real-world difficulties that cause the problems in pushing the
-                boundary are still left behind and typically emerge when
-                adjusting
-                subtle UI details—such as precisely positioning a volume slider,
-                dragging the bottom-right corner of a spreadsheet cell, or
-                locking
-                and resizing edges and vertices in a presentation slide.
-                We design to address these practical, fine-grained tasks
-                encountered across modern operating systems and software. In
-                total, we collect 564 samples, annotated with 32 different
-                UI-types, each with a paraphrased instruction that requires no
-                software knowledge to execute. </p>
+                We develop the OSWORLD-G, comprising 564 finely annotated
+                samples
+                that systematically cover text matching, element recognition,
+                layout understanding and fine-grained
+                manipulation, with annotations for the element types required to
+                solve each task. </p>
             </div>
           </div>
         </div>
@@ -351,24 +347,14 @@
             <h2 class="title is-3">Dataset: Jedi</h2>
             <div class="content has-text-justified">
               <p>
-                To enable robust GUI grounding, we construct the world's largest
-                multimodal dataset tailored for computer-use grounding
-                scenarios,
-                containing 4 million examples newly synthesized examples.
-                Our grounding data collection process centers on gathering pairs
-                of
-                screenshots and metadata (information such as filename,
-                rendering
-                code, element bounding box, etc.), which are then further
-                transformed
-                into training data which contains queries and corresponding
-                answers
-                for VLMs to learn from it.
+                we collect and synthesize the largest-scale open grounding
+                dataset in the web and desktop
+                domain through multi-perspective decoupling of tasks.
               </p>
             </div>
 
             <img src="./static/images/data_construction.png"
-              alt="Data Construction" width="100%">
+              alt="Data Construction" width="80%">
           </div>
         </div>
       </div>
