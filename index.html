@@ -46,6 +46,150 @@
       href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <link rel="stylesheet" href="./static/css/index.css">
     <link rel="icon" href="./static/images/favicon.svg">
+    <style>
+      .trajectory-sidebar {
+        /* Adjust this value as needed, 560px is an estimate */
+        max-height: 420px; 
+        overflow-y: auto; /* Add scrollbar when content exceeds max-height */
+      }
+
+      .step-action-details code {
+        display: inline-block; 
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        font-size: 0.75em; /* 更小的基础字体尺寸 */
+        padding: 4px 8px; /* 为整个代码块添加内边距 */
+        margin-top: 5px;
+        margin-bottom: 10px;
+        background-color: transparent; /* 移除灰色背景 */
+        border-radius: 4px; /* 圆角 */
+        color: inherit;
+      }
+
+      .step-action-details .action-type {
+        display: inline-block;
+        background-color: #666666; /* 改为中灰色 */
+        color: #ffffff; /* 白色文本以提高在灰色背景上的可读性 */
+        padding: 3px 8px; /* 较小的内边距 */
+        border-radius: 12px; /* 适当减小圆角 */
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-right: 6px; /* 减小右侧间距 */
+        font-size: 0.85em; /* 略微减小字体 */
+        line-height: 1;
+        min-width: 60px; /* 添加最小宽度 */
+        text-align: center; /* 文本居中 */
+      }
+
+      .step-action-details .action-coords {
+        display: inline-block;
+        color: #606060; /* 稍深一点的灰色，在灰色背景上更清晰 */
+        font-size: 0.65em; /* 与action-type匹配 */
+        vertical-align: middle;
+      }
+
+      .step-list-item.active {
+        background-color: #e8e8e8; /* Highlight active step slightly more */
+      }
+
+      /* 鼠标指示器样式 */
+      .mouse-indicator {
+        position: absolute;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      .trajectory-main {
+        position: relative;
+      }
+
+      .click-indicator {
+        width: 30px;
+        height: 30px;
+        background-image: url('./static/images/pointinghand.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        position: absolute;
+        transform: none;
+      }
+
+      .drag-indicator {
+        width: 30px;
+        height: 30px;
+        background-image: url('./static/images/vector.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        position: absolute;
+        transform: none;
+      }
+      
+      .click-point {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background-color: #ff5722;
+        border-radius: 50%;
+        z-index: 99;
+        transform: translate(-50%, -50%);
+      }
+      
+      .drag-line {
+        position: absolute;
+        height: 2px;
+        background-color: #F44336; /* Red line */
+        z-index: 98;
+        transform-origin: left center;
+      }
+      
+      .drag-line::after {
+        content: '';
+        position: absolute;
+        width: 8px;  /* Length of the V's arms */
+        height: 8px; /* Affects the angle and size */
+        box-sizing: border-box;
+        border-style: solid;
+        border-color: #F44336; /* Color of the V */
+        border-width: 0 2px 2px 0; /* Creates an L-shape (bottom and right borders) */
+                                   /* Stroke thickness is 2px */
+        top: 50%; /* Vertically center the base of the L-shape */
+        right: -4px; /* Position the L-shape so its corner (eventual V tip) is at the line's end */
+                     /* Needs adjustment: - (height_of_L_corner_element / 2 / sqrt(2) ) approx */
+        transform: translateY(-50%) rotate(-45deg); /* Rotate L to V, V points right */
+      }
+
+      /* Trajectory selector styles */
+      .trajectory-selector {
+        margin-bottom: 1.5rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .trajectory-selector .tabs {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .trajectory-selector .tabs ul {
+        border-bottom-color: #dbdbdb;
+        justify-content: center;
+      }
+
+      .trajectory-selector .tabs li.is-active a {
+        border-bottom-color: #9966cc;
+        color: #9966cc;
+      }
+
+      .trajectory-tab {
+        cursor: pointer;
+      }
+    </style>
     <script
       src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -225,7 +369,7 @@
                     </a>
                   </span>
                   <span class="link-block">
-                    <a href="https://huggingface.co/datasets/xlang/jedi"
+                    <a href="https://huggingface.co/datasets/xlang/Jedi"
                       class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                         <i class="far fa-images"></i>
@@ -304,18 +448,6 @@
           </div>
         </div>
         <!--/ Updates. -->
-      </div>
-    </section>
-
-    <!-- Showcase -->
-    <section class="section">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered has-text-centered">
-          <div class="content">
-            <h2 class="title">OSWorld Showcase [REMOVE THIS TITLE AFTER VIDEO IS
-              DONE]</h2>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -537,7 +669,7 @@
                   <tr>
                     <td class="model-name">GPT-4o</td>
                     <td class="our-model">JeDi-3B (15 steps)</td>
-                    <td>21.8 <sub>±0.19</sub></td>
+                    <td>22.4 <sub>±0.33</sub></td>
                     <td>29.1 <sub>±0.57</sub></td>
                   </tr>
                   <tr>
@@ -564,6 +696,74 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- Trajectory Visualization -->
+    <section class="section" id="trajectory-visualization">
+      <div class="container-fluid">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-10">
+            <h2 class="title is-3">Computer Use Showcase</h2>
+            
+            <!-- Add trajectory selector tabs -->
+            <div class="trajectory-selector">
+              <div class="tabs">
+                <ul>
+                  <li class="trajectory-tab" data-trajectory-id="72b810ef-4156-4d09-8f08-a0cf57e7cefe">
+                    <a>Format Document</a>
+                  </li>
+                  <li class="trajectory-tab is-active" data-trajectory-id="1e8df695-bd1b-45b3-b557-e7d599cf7597">
+                    <a>Spreadsheet Calculation</a>
+                  </li>
+                  <li class="trajectory-tab" data-trajectory-id="5316686e-5688-4115-be24-052037df599f-WOS">
+                    <a>File Explorer Settings</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="trajectory-container">
+              <div class="trajectory-sidebar">
+                <div class="user-query-section">
+                  <div class="query-marker">
+                    <span class="dot"></span>
+                    <span class="label">Task Instruction</span>
+                  </div>
+                  <div class="query-content">
+                    <p id="traj-instruction">I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?</p>
+                  </div>
+                </div>
+                
+                <ul class="step-list">
+                  <!-- Step list items will be dynamically generated here -->
+                </ul>
+              </div>
+              
+              <div class="trajectory-main">
+                <img id="traj-image" src="./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png" alt="Trajectory step 1">
+                <div id="mouse-indicator" class="mouse-indicator"></div>
+              </div>
+            </div>
+            
+            <div class="controls-container">
+              <div class="step-controls">
+                <button class="control-btn" id="prev-step" disabled>
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="control-btn" id="play-steps">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn" id="next-step">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="control-btn" id="replay-step">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
