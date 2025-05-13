@@ -751,7 +751,7 @@ $(document).ready(function() {
                     isPlaying = false;
                     $('#play-steps').html('<i class="fas fa-play"></i>');
                 }
-            }, 800);
+            }, 1200);
         }
     }
 
@@ -797,7 +797,7 @@ $(document).ready(function() {
                 isPlaying = false;
                 $('#play-steps').html('<i class="fas fa-play"></i>');
             }
-        }, 800);
+        }, 1200);
     });
     
     // Trajectory selector event listener
