@@ -506,16 +506,27 @@ $(document).ready(function() {
                 if (currentStep === 0) {
                     desiredScrollTop = 0; // 初始加载时，强制滚动到最顶部
                 } else {
-                    let activeStepTopInScrollableArea = $activeStep.position().top;
-                    // 将激活的步骤项滚动到距离视口顶部约50px的位置
-                    desiredScrollTop = activeStepTopInScrollableArea - 50;
-                    desiredScrollTop = Math.max(0, desiredScrollTop); // 确保滚动位置不为负
+                    // Calculate the position of the active step relative to the sidebar
+                    const activeStepTopInScrollableArea = $activeStep.offset().top - $sidebar.offset().top;
+                    const activeStepBottomInScrollableArea = activeStepTopInScrollableArea + $activeStep.outerHeight();
+                    const sidebarHeight = $sidebar.height();
+
+                    // Ensure the active step is fully visible
+                    if (activeStepTopInScrollableArea < 0) {
+                        desiredScrollTop = $sidebar.scrollTop() + activeStepTopInScrollableArea;
+                    } else if (activeStepBottomInScrollableArea > sidebarHeight) {
+                        desiredScrollTop = $sidebar.scrollTop() + (activeStepBottomInScrollableArea - sidebarHeight);
+                    } else {
+                        desiredScrollTop = $sidebar.scrollTop(); // No need to scroll
+                    }
+
+                    desiredScrollTop = Math.max(0, Math.min(desiredScrollTop, $sidebar[0].scrollHeight - sidebarHeight)); // Ensure the scroll position is within bounds
                 }
 
                 // 仅当需要改变滚动位置时才执行动画
-                if ($sidebar.scrollTop() !== desiredScrollTop) {
-                    $sidebar.animate({
-                        scrollTop: desiredScrollTop
+                if (Math.abs($sidebar.scrollTop() - Math.round(desiredScrollTop)) > 1) { // Apply tolerance and round target
+                    $sidebar.stop(true, true).animate({
+                        scrollTop: Math.round(desiredScrollTop) // Round desiredScrollTop for animation
                     }, 300);
                 }
             }, 50); 
