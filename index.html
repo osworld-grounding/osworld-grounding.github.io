@@ -563,6 +563,59 @@
       </div>
     </section>
 
+    <!-- Trajectory Visualization -->
+    <section class="section" id="trajectory-visualization">
+      <div class="container-fluid">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-10">
+            <h2 class="title is-3">Trajectory Visualization</h2>
+            <div class="content has-text-justified">
+              <p>
+                Below is a visualization of an agent trajectory, showing how the agent completes a task step by step.
+              </p>
+            </div>
+            
+            <div class="trajectory-container">
+              <div class="trajectory-sidebar">
+                <div class="user-query-section">
+                  <div class="query-marker">
+                    <span class="dot"></span>
+                    <span class="label">USER QUERY</span>
+                  </div>
+                  <div class="query-content">
+                    <p id="traj-instruction">I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?</p>
+                  </div>
+                </div>
+                
+                <ul class="step-list">
+                  <!-- Step list items will be dynamically generated here -->
+                </ul>
+              </div>
+              
+              <div class="trajectory-main">
+                <img id="traj-image" src="./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png" alt="Trajectory step 1">
+                <div id="mouse-indicator" class="mouse-indicator"></div>
+              </div>
+            </div>
+            
+            <div class="controls-container">
+              <div class="step-controls">
+                <button class="control-btn" id="prev-step" disabled>
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="control-btn" id="play-steps">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn" id="next-step">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- BibTeX -->
     <section class="section" id="BibTeX">
       <div class="container is-max-desktop content">
