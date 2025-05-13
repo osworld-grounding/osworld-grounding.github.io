@@ -234,12 +234,22 @@ $(document).ready(function() {
         const $sidebar = $('.trajectory-sidebar');
         if ($activeStep.length) {
             setTimeout(function() {
-                let activeStepTopInScrollableArea = $activeStep.position().top; 
-                let desiredScrollTop = $sidebar.scrollTop() + activeStepTopInScrollableArea - 50; // 50px offset
+                let desiredScrollTop;
+                if (currentStep === 0) {
+                    desiredScrollTop = 0; // 初始加载时，强制滚动到最顶部
+                } else {
+                    let activeStepTopInScrollableArea = $activeStep.position().top;
+                    // 将激活的步骤项滚动到距离视口顶部约50px的位置
+                    desiredScrollTop = activeStepTopInScrollableArea - 50;
+                    desiredScrollTop = Math.max(0, desiredScrollTop); // 确保滚动位置不为负
+                }
 
-                $sidebar.animate({
-                    scrollTop: desiredScrollTop
-                }, 300);
+                // 仅当需要改变滚动位置时才执行动画
+                if ($sidebar.scrollTop() !== desiredScrollTop) {
+                    $sidebar.animate({
+                        scrollTop: desiredScrollTop
+                    }, 300);
+                }
             }, 50); 
         }
         
