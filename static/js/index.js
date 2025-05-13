@@ -273,9 +273,9 @@ $(document).ready(function() {
     function updateMouseIndicator(step) {
         const $indicator = $('#mouse-indicator');
         const $trajectoryMain = $('.trajectory-main');
-        const interStepTransitionTime = 300; // Animation time between steps for the icon
-        const intraStepDragAnimTime = 500;   // Animation time for icon during a drag
-        const intraStepDragDelay = 250;    // Delay before starting intra-step drag animation
+        const interStepTransitionTime = 150; // Animation time between steps for the icon (was 300)
+        const intraStepDragAnimTime = 250;   // Animation time for icon during a drag (was 500)
+        const intraStepDragDelay = 125;    // Delay before starting intra-step drag animation (was 250)
 
         // --- 1. Preparations ---
         $('.click-point, .drag-line').remove(); // Clear old specific visuals first
@@ -415,7 +415,7 @@ $(document).ready(function() {
                     isPlaying = false;
                     $('#play-steps').html('<i class="fas fa-play"></i>');
                 }
-            }, 1200);
+            }, 800);
         }
     }
 
