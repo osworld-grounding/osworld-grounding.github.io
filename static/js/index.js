@@ -126,6 +126,35 @@ $(document).ready(function() {
         $stepList.empty();
         
         trajectoryData.steps.forEach((step, index) => {
+            let actionDisplay = step.action;
+            if (actionDisplay === "DONE") {
+                actionDisplay = `<code><span class="action-type">COMPLETE</span></code>`;
+            } else if (step.mouseAction) {
+                // Capitalize action type (e.g., "click" -> "CLICK")
+                let actionType = step.mouseAction.type.charAt(0).toUpperCase() + step.mouseAction.type.slice(1);
+                let coords = '';
+                
+                if (step.mouseAction.x !== undefined && step.mouseAction.y !== undefined) {
+                    coords = `(${step.mouseAction.x}, ${step.mouseAction.y})`;
+                }
+                
+                if (step.mouseAction.type === "drag") {
+                    // 对于拖拽动作，使用startX和startY作为起点，endX和endY作为终点
+                    let startX = step.mouseAction.startX || step.mouseAction.x;
+                    let startY = step.mouseAction.startY || step.mouseAction.y;
+                    
+                    if (step.mouseAction.endX !== undefined && step.mouseAction.endY !== undefined) {
+                        coords = `(${startX}, ${startY}) → (${step.mouseAction.endX}, ${step.mouseAction.endY})`;
+                    }
+                }
+                
+                // Create HTML with spans for styling
+                actionDisplay = `<code><span class="action-type">${actionType}</span> <span class="action-coords">${coords}</span></code>`;
+            } else {
+                // Fallback if action is not DONE and no mouseAction
+                actionDisplay = `<code>${step.description}</code>`; // Wrapped in code tag for consistent styling
+            }
+
             const $stepItem = $(`
                 <li class="step-list-item" data-step="${index}">
                     <div class="step-header">
@@ -133,12 +162,9 @@ $(document).ready(function() {
                             <span class="step-number">Step ${step.stepNum}</span>
                             <span class="step-title">${step.description}</span>
                         </div>
-                        <span class="step-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </span>
                     </div>
-                    <div class="step-content">
-                        <div class="chain-of-thought">${step.response}</div>
+                    <div class="step-action-details">
+                        ${actionDisplay}
                     </div>
                 </li>
             `);
@@ -149,25 +175,14 @@ $(document).ready(function() {
         // Add click event to step items for navigation
         $('.step-list-item').click(function(e) {
             // Only handle navigation clicks if not clicking on toggle or expanded content
-            if (!$(e.target).closest('.step-toggle').length && !$(e.target).closest('.step-content').length) {
+            // Since toggle is removed, this condition can be simplified or might not be needed
+            // if structure prevents accidental clicks. For now, keep it general.
+            if (!$(e.target).closest('.step-toggle').length && !$(e.target).closest('.step-action-details').length || $(e.target).closest('.step-header').length) {
                 const stepIndex = $(this).data('step');
-                currentStep = stepIndex;
-                updateTrajViewer();
-            }
-        });
-        
-        // Add click event to toggle buttons for expanding/collapsing
-        $('.step-toggle').click(function(e) {
-            e.stopPropagation();
-            const $stepItem = $(this).closest('.step-list-item');
-            
-            // If this step is already expanded, collapse it
-            if ($stepItem.hasClass('expanded')) {
-                $stepItem.removeClass('expanded');
-            } else {
-                // Otherwise collapse all and expand this one
-                $('.step-list-item').removeClass('expanded');
-                $stepItem.addClass('expanded');
+                if (currentStep !== stepIndex) { // Prevent re-processing if already active
+                    currentStep = stepIndex;
+                    updateTrajViewer();
+                }
             }
         });
     }
@@ -210,19 +225,16 @@ $(document).ready(function() {
         const $activeStep = $(`.step-list-item[data-step="${currentStep}"]`);
         $activeStep.addClass('active');
         
-        // Auto-expand the active step and collapse others
-        $('.step-list-item').not($activeStep).removeClass('expanded');
-        
-        // First scroll to the active step
         const $sidebar = $('.trajectory-sidebar');
-        
         if ($activeStep.length) {
-            $sidebar.animate({
-                scrollTop: $activeStep.position().top + $sidebar.scrollTop() - 100 // 给顶部留出空间
-            }, 300, function() {
-                // 滚动完成后再展开步骤，避免滚动位置计算错误
-                $activeStep.addClass('expanded');
-            });
+            setTimeout(function() {
+                let activeStepTopInScrollableArea = $activeStep.position().top; 
+                let desiredScrollTop = $sidebar.scrollTop() + activeStepTopInScrollableArea - 50; // 50px offset
+
+                $sidebar.animate({
+                    scrollTop: desiredScrollTop
+                }, 300);
+            }, 50); 
         }
         
         // Update mouse indicator
@@ -253,30 +265,36 @@ $(document).ready(function() {
         const $image = $('#traj-image');
         const imgWidth = $image.width();
         const imgHeight = $image.height();
-        const origWidth = 1280; // Original image width
-        const origHeight = 720; // Original image height
+        const origWidth = 1920; // 修改为正确的原始图像宽度
+        const origHeight = 1080; // 修改为正确的原始图像高度
         
         // Calculate scale factor
         const scaleX = imgWidth / origWidth;
         const scaleY = imgHeight / origHeight;
+        
+        // Reset any existing classes first
+        $indicator.removeClass('click-indicator drag-indicator');
         
         if (step.mouseAction.type === "click") {
             // Position indicator at click location
             const x = step.mouseAction.x * scaleX;
             const y = step.mouseAction.y * scaleY;
             
+            // Add click indicator class
+            $indicator.addClass('click-indicator');
+            
             $indicator.css({
                 left: x + 'px',
                 top: y + 'px',
                 display: 'block'
             });
-            
-            // Add animation class
-            $indicator.removeClass('drag-indicator').addClass('click-indicator');
         } else if (step.mouseAction.type === "drag") {
             // Position indicator at drag start
             const startX = step.mouseAction.startX * scaleX;
             const startY = step.mouseAction.startY * scaleY;
+            
+            // Add drag indicator class
+            $indicator.addClass('drag-indicator');
             
             $indicator.css({
                 left: startX + 'px',

@@ -42,6 +42,90 @@
       href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <link rel="stylesheet" href="./static/css/index.css">
     <link rel="icon" href="./static/images/favicon.svg">
+    <style>
+      .trajectory-sidebar {
+        /* Adjust this value as needed, 560px is an estimate */
+        max-height: 420px; 
+        overflow-y: auto; /* Add scrollbar when content exceeds max-height */
+      }
+
+      .step-action-details code {
+        display: inline-block; 
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        font-size: 0.65em; /* 更小的基础字体尺寸 */
+        padding: 4px 8px; /* 为整个代码块添加内边距 */
+        margin-top: 5px;
+        margin-bottom: 10px;
+        background-color: transparent; /* 移除灰色背景 */
+        border-radius: 4px; /* 圆角 */
+        color: inherit;
+      }
+
+      .step-action-details .action-type {
+        display: inline-block;
+        background-color: #666666; /* 改为中灰色 */
+        color: #ffffff; /* 白色文本以提高在灰色背景上的可读性 */
+        padding: 3px 8px; /* 较小的内边距 */
+        border-radius: 12px; /* 适当减小圆角 */
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-right: 6px; /* 减小右侧间距 */
+        font-size: 0.85em; /* 略微减小字体 */
+        line-height: 1;
+        min-width: 60px; /* 添加最小宽度 */
+        text-align: center; /* 文本居中 */
+      }
+
+      .step-action-details .action-coords {
+        display: inline-block;
+        color: #606060; /* 稍深一点的灰色，在灰色背景上更清晰 */
+        font-size: 0.65em; /* 与action-type匹配 */
+        vertical-align: middle;
+      }
+
+      .step-list-item.active {
+        background-color: #e8e8e8; /* Highlight active step slightly more */
+      }
+
+      /* 鼠标指示器样式 */
+      .mouse-indicator {
+        position: absolute;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      .trajectory-main {
+        position: relative;
+      }
+
+      .click-indicator {
+        width: 30px;
+        height: 30px;
+        background-image: url('./static/images/pointinghand.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        position: absolute;
+        transform: none;
+      }
+
+      .drag-indicator {
+        width: 30px;
+        height: 30px;
+        background-image: url('./static/images/vector.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        position: absolute;
+        transform: none;
+      }
+    </style>
     <script
       src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -580,7 +664,7 @@
                 <div class="user-query-section">
                   <div class="query-marker">
                     <span class="dot"></span>
-                    <span class="label">Instruction</span>
+                    <span class="label">Task Instruction</span>
                   </div>
                   <div class="query-content">
                     <p id="traj-instruction">I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?</p>
