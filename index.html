@@ -125,6 +125,40 @@
         position: absolute;
         transform: none;
       }
+      
+      .click-point {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background-color: #ff5722;
+        border-radius: 50%;
+        z-index: 99;
+        transform: translate(-50%, -50%);
+      }
+      
+      .drag-line {
+        position: absolute;
+        height: 2px;
+        background-color: #F44336; /* Red line */
+        z-index: 98;
+        transform-origin: left center;
+      }
+      
+      .drag-line::after {
+        content: '';
+        position: absolute;
+        width: 8px;  /* Length of the V's arms */
+        height: 8px; /* Affects the angle and size */
+        box-sizing: border-box;
+        border-style: solid;
+        border-color: #F44336; /* Color of the V */
+        border-width: 0 2px 2px 0; /* Creates an L-shape (bottom and right borders) */
+                                   /* Stroke thickness is 2px */
+        top: 50%; /* Vertically center the base of the L-shape */
+        right: -4px; /* Position the L-shape so its corner (eventual V tip) is at the line's end */
+                     /* Needs adjustment: - (height_of_L_corner_element / 2 / sqrt(2) ) approx */
+        transform: translateY(-50%) rotate(-45deg); /* Rotate L to V, V points right */
+      }
     </style>
     <script
       src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -387,18 +421,6 @@
       </div>
     </section>
 
-    <!-- Showcase -->
-    <section class="section">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered has-text-centered">
-          <div class="content">
-            <h2 class="title">OSWorld Showcase [REMOVE THIS TITLE AFTER VIDEO IS
-              DONE]</h2>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- TODO: decide which to put for benchmark page -->
     <!-- Benchmark--three small pictures in three columns?, representing three kinds of tasks in OSWorld-G. -->
     <section class="section">
@@ -652,7 +674,7 @@
       <div class="container-fluid">
         <div class="columns is-centered has-text-centered">
           <div class="column is-10">
-            <h2 class="title is-3">Trajectory Visualization</h2>
+            <h2 class="title is-3">OSWorld Showcase</h2>
             <div class="content has-text-justified">
               <p>
                 Below is a visualization of an agent trajectory, showing how the agent completes a task step by step.

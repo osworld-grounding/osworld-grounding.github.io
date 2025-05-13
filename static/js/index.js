@@ -84,7 +84,7 @@ $(document).ready(function() {
                 action: "# Select the last paragraph by clicking and dragging from the start to the end of the paragraph\npyautogui.click(657, 639,  duration=1)",
                 response: "I need to add strikethrough formatting to the last paragraph in this document.\n\nFirst, I need to select the text of the last paragraph:\n1. I can see that the document has multiple paragraphs of text\n2. The last paragraph appears to start with 'Each student will be responsible for...' and continues to the end of the visible text\n3. To select this paragraph, I'll position my cursor at the beginning of the paragraph\n\nI'll click at coordinates (657, 639) which appears to be at the beginning of the last paragraph.",
                 description: "Select the paragraph",
-                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png",
+                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_0_20250503@074819.png",
                 mouseAction: { type: "click", x: 657, y: 639 }
             },
             {
@@ -92,7 +92,7 @@ $(document).ready(function() {
                 action: "# Click and drag to select the entire last paragraph\npyautogui.dragTo(657, 739, duration=1, button='left')",
                 response: "Now that I've positioned my cursor at the beginning of the last paragraph, I need to select all the text in this paragraph:\n\n1. I'll drag from the current position (where I just clicked) down to the end of the paragraph\n2. I need to click and hold the left mouse button while dragging to select the text\n3. The paragraph appears to end around position (657, 739)\n\nI'll drag from the current position to (657, 739) to select the entire paragraph text. This will allow me to apply the strikethrough formatting to the whole paragraph in the next step.",
                 description: "Drag to select the text",
-                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_2_20250503@074853.png",
+                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png",
                 mouseAction: { type: "drag", startX: 657, startY: 639, endX: 657, endY: 739 }
             },
             {
@@ -100,7 +100,7 @@ $(document).ready(function() {
                 action: "# Click the strikethrough button in the toolbar\npyautogui.click(813, 146,  duration=1)",
                 response: "Now that I have selected the entire paragraph, I need to apply the strikethrough formatting:\n\n1. Looking at the toolbar at the top of the LibreOffice Writer window\n2. I can see various formatting options including bold, italic, underline, etc.\n3. The strikethrough button appears to be located at coordinates (813, 146)\n4. This button will apply the strikethrough formatting to the selected text\n\nI'll click on the strikethrough button in the toolbar. This will apply strikethrough formatting to the selected paragraph, indicating that it's redundant as requested.",
                 description: "Apply strikethrough formatting",
-                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_3_20250503@074916.png",
+                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_2_20250503@074853.png",
                 mouseAction: { type: "click", x: 813, y: 146 }
             },
             {
@@ -108,7 +108,7 @@ $(document).ready(function() {
                 action: "DONE",
                 response: "I've successfully completed the task of applying strikethrough formatting to the last paragraph:\n\n1. I identified the last paragraph in the document\n2. I selected the entire paragraph by clicking at its beginning and dragging to its end\n3. I applied strikethrough formatting by clicking the strikethrough button in the toolbar\n4. The formatting has been applied correctly, and the paragraph now appears with a line through it\n\nThe task is now complete. The strikethrough formatting visually indicates that the paragraph is redundant as requested in the peer review process.",
                 description: "Task completed",
-                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_4_20250503@074935.png",
+                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_3_20250503@074916.png",
                 mouseAction: null
             }
         ],
@@ -259,59 +259,87 @@ $(document).ready(function() {
         
         if (!step.mouseAction) {
             $indicator.hide();
+            // 移除任何可能存在的点击点和拖拽线
+            $('.click-point, .drag-line').remove();
             return;
         }
         
         const $image = $('#traj-image');
         const imgWidth = $image.width();
         const imgHeight = $image.height();
-        const origWidth = 1920; // 修改为正确的原始图像宽度
-        const origHeight = 1080; // 修改为正确的原始图像高度
+        const origWidth = 1920; // 原始图像宽度
+        const origHeight = 1080; // 原始图像高度
         
-        // Calculate scale factor
+        // 计算缩放比例
         const scaleX = imgWidth / origWidth;
         const scaleY = imgHeight / origHeight;
         
-        // Reset any existing classes first
+        // 重置任何现有的类
         $indicator.removeClass('click-indicator drag-indicator');
         
+        // 移除任何可能存在的点击点和拖拽线
+        $('.click-point, .drag-line').remove();
+        
         if (step.mouseAction.type === "click") {
-            // Position indicator at click location
+            // 计算点击位置
             const x = step.mouseAction.x * scaleX;
             const y = step.mouseAction.y * scaleY;
             
-            // Add click indicator class
+            // 添加点击指示器类
             $indicator.addClass('click-indicator');
             
+            // 设置指示器位置
             $indicator.css({
                 left: x + 'px',
                 top: y + 'px',
                 display: 'block'
             });
+            
+            // 添加点击点
+            const $clickPoint = $('<div class="click-point"></div>');
+            $('.trajectory-main').append($clickPoint);
+            $clickPoint.css({
+                left: x + 'px',
+                top: y + 'px'
+            });
         } else if (step.mouseAction.type === "drag") {
-            // Position indicator at drag start
+            // 计算拖拽起点和终点
             const startX = step.mouseAction.startX * scaleX;
             const startY = step.mouseAction.startY * scaleY;
+            const endX = step.mouseAction.endX * scaleX;
+            const endY = step.mouseAction.endY * scaleY;
             
-            // Add drag indicator class
+            // 添加拖拽指示器类
             $indicator.addClass('drag-indicator');
             
+            // 设置指示器位置（起点）
             $indicator.css({
                 left: startX + 'px',
                 top: startY + 'px',
                 display: 'block'
             });
             
-            // Animate drag
+            // 计算拖拽线的长度和角度
+            const length = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+            const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+            
+            // 添加拖拽线
+            const $dragLine = $('<div class="drag-line"></div>');
+            $('.trajectory-main').append($dragLine);
+            $dragLine.css({
+                left: startX + 'px',
+                top: startY + 'px',
+                width: length + 'px',
+                transform: `rotate(${angle}deg)`
+            });
+            
+            // 动画移动指示器
             setTimeout(() => {
-                const endX = step.mouseAction.endX * scaleX;
-                const endY = step.mouseAction.endY * scaleY;
-                
                 $indicator.animate({
                     left: endX + 'px',
                     top: endY + 'px'
-                }, 1000);
-            }, 500);
+                }, 500);
+            }, 250);
         }
     }
 
@@ -346,7 +374,7 @@ $(document).ready(function() {
                     isPlaying = false;
                     $('#play-steps').html('<i class="fas fa-play"></i>');
                 }
-            }, 3000); // Advance every 3 seconds
+            }, 1000);
         }
     }
 
