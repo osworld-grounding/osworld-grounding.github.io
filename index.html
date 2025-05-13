@@ -2,6 +2,10 @@
 <!-- TODO: [1h] add image carousel for dataset -->
 <!-- TODO: [1.5h] eval op on ss-pro -->
 <!-- TODO: [50min] draw a curve and a smaller table for agentic ability-->
+<!-- 1. comparison between gpt-4o and ours
+2. comparison between different 4o+grounding method
+3. can we put our best socre on it?
+4. what about op 50 steps -->
 <!-- TODO: [10min] Change colors for our model -->
 
 <!-- TODO: Add osworld showcase, and we don't need title --> v
@@ -558,7 +562,7 @@
               }
               .our-model {
                 font-weight: 600;
-                color: #9966cc;
+                color:blue;
               }
               .best-score {
                 font-weight: 700;
@@ -593,7 +597,7 @@
                   <tr>
                     <td class="model-name">Operator</td>
                     <td>70.5</td>
-                    <td>N/A</td>
+                    <td>-</td>
                     <td>51.8</td>
                   </tr>
                   <tr>
@@ -641,45 +645,42 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td colspan="2"
-                      class="model-name span-two-columns">GPT-4o</td>
+                    <td>GPT-4o</td>
                     <td>5.0</td>
                     <td>9.4</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name span-two-columns">Kimi-VL
+                    <td>Kimi-VL
                       (15 steps)</td>
                     <td>8.2</td>
                     <td>10.4</td>
                   </tr>
                   <tr>
-                    <td colspan="2"
-                      class="model-name span-two-columns">Aguvis-72B (15
+                    <td>Aguvis-72B (15
                       steps)</td>
                     <td>10.3</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td colspan="2"
-                      class="model-name span-two-columns">UI-TARS-72B (50
+                    <td>UI-TARS-72B (50
                       steps)</td>
                     <td>22.7</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name span-two-columns">Operator
+                    <td>Operator
                       (15 steps)</td>
                     <td>19.7</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name span-two-columns">Operator
+                    <td>Operator
                       (50 steps)</td>
                     <td>32.6</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="model-name span-two-columns">Claude
+                    <td>Claude
                       3.7 Sonnet (50 steps)</td>
                     <td>26.0</td>
                     <td>-</td>
@@ -757,8 +758,6 @@
               </p>
             </div>
 
-            <img src="./static/images/data_construction.png"
-              alt="Data Construction" width="80%">
           </div>
         </div>
       </div>
