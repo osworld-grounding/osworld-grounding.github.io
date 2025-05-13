@@ -82,7 +82,7 @@ $(document).ready(function() {
             {
                 stepNum: 1,
                 action: "# Select the last paragraph by clicking and dragging from the start to the end of the paragraph\npyautogui.click(657, 639,  duration=1)",
-                response: "I took a look at the table, and the data is spread across the range from A1 to E15. To transfer this data to Writer, the first step is to select it. I need to move my mouse to the A1 cell, hold down the left mouse button, and drag it down to the E15 cell. This way, I can select all the data that needs to be copied.",
+                response: "I need to add strikethrough formatting to the last paragraph in this document.\n\nFirst, I need to select the text of the last paragraph:\n1. I can see that the document has multiple paragraphs of text\n2. The last paragraph appears to start with 'Each student will be responsible for...' and continues to the end of the visible text\n3. To select this paragraph, I'll position my cursor at the beginning of the paragraph\n\nI'll click at coordinates (657, 639) which appears to be at the beginning of the last paragraph.",
                 description: "Select the paragraph",
                 image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png",
                 mouseAction: { type: "click", x: 657, y: 639 }
@@ -90,7 +90,7 @@ $(document).ready(function() {
             {
                 stepNum: 2,
                 action: "# Click and drag to select the entire last paragraph\npyautogui.dragTo(657, 739, duration=1, button='left')",
-                response: "I noticed that the data range from A1 to E15 has already been selected, but it seems that the selection isn't quite complete. To ensure that I can fully copy all the data, I need to click on a blank area of the table to deselect the current selection and start over. This way, I can make sure that I'm selecting all the necessary data.",
+                response: "Now that I've positioned my cursor at the beginning of the last paragraph, I need to select all the text in this paragraph:\n\n1. I'll drag from the current position (where I just clicked) down to the end of the paragraph\n2. I need to click and hold the left mouse button while dragging to select the text\n3. The paragraph appears to end around position (657, 739)\n\nI'll drag from the current position to (657, 739) to select the entire paragraph text. This will allow me to apply the strikethrough formatting to the whole paragraph in the next step.",
                 description: "Drag to select the text",
                 image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_2_20250503@074853.png",
                 mouseAction: { type: "drag", startX: 657, startY: 639, endX: 657, endY: 739 }
@@ -98,7 +98,7 @@ $(document).ready(function() {
             {
                 stepNum: 3,
                 action: "# Click the strikethrough button in the toolbar\npyautogui.click(813, 146,  duration=1)",
-                response: "Now I have selected the entire data range from A1 to E15. I can see that the data includes headers and numerical values organized in columns. The next step is to copy this data so I can paste it into LibreOffice Writer. I'll use the keyboard shortcut Ctrl+C to copy the selected data.",
+                response: "Now that I have selected the entire paragraph, I need to apply the strikethrough formatting:\n\n1. Looking at the toolbar at the top of the LibreOffice Writer window\n2. I can see various formatting options including bold, italic, underline, etc.\n3. The strikethrough button appears to be located at coordinates (813, 146)\n4. This button will apply the strikethrough formatting to the selected text\n\nI'll click on the strikethrough button in the toolbar. This will apply strikethrough formatting to the selected paragraph, indicating that it's redundant as requested.",
                 description: "Apply strikethrough formatting",
                 image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_3_20250503@074916.png",
                 mouseAction: { type: "click", x: 813, y: 146 }
@@ -106,13 +106,13 @@ $(document).ready(function() {
             {
                 stepNum: 4,
                 action: "DONE",
-                response: "I've successfully copied the data from the spreadsheet. Now I need to open LibreOffice Writer and paste the data while preserving the original format as in the calc file. Once Writer is open, I'll click where I want to insert the table and use Ctrl+V to paste. Then I'll save the document as 'price.docx' on the desktop as requested.",
+                response: "I've successfully completed the task of applying strikethrough formatting to the last paragraph:\n\n1. I identified the last paragraph in the document\n2. I selected the entire paragraph by clicking at its beginning and dragging to its end\n3. I applied strikethrough formatting by clicking the strikethrough button in the toolbar\n4. The formatting has been applied correctly, and the paragraph now appears with a line through it\n\nThe task is now complete. The strikethrough formatting visually indicates that the paragraph is redundant as requested in the peer review process.",
                 description: "Task completed",
                 image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_4_20250503@074935.png",
                 mouseAction: null
             }
         ],
-        instruction: "Can you assist me in transferring the data from LibreOffice Calc in the current sheet to a LibreOffice Writer table while preserving the original format as in calc file? Save the document as \"price.docx\" on the desktop."
+        instruction: "I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?"
     };
 
     let currentStep = 0;
@@ -128,19 +128,47 @@ $(document).ready(function() {
         trajectoryData.steps.forEach((step, index) => {
             const $stepItem = $(`
                 <li class="step-list-item" data-step="${index}">
-                    <span class="step-number">Step ${step.stepNum}</span>
-                    <span class="step-title">${step.description}</span>
+                    <div class="step-header">
+                        <div class="step-left">
+                            <span class="step-number">Step ${step.stepNum}</span>
+                            <span class="step-title">${step.description}</span>
+                        </div>
+                        <span class="step-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </div>
+                    <div class="step-content">
+                        <div class="chain-of-thought">${step.response}</div>
+                    </div>
                 </li>
             `);
             
             $stepList.append($stepItem);
         });
         
-        // Add click event to step items
-        $('.step-list-item').click(function() {
-            const stepIndex = $(this).data('step');
-            currentStep = stepIndex;
-            updateTrajViewer();
+        // Add click event to step items for navigation
+        $('.step-list-item').click(function(e) {
+            // Only handle navigation clicks if not clicking on toggle or expanded content
+            if (!$(e.target).closest('.step-toggle').length && !$(e.target).closest('.step-content').length) {
+                const stepIndex = $(this).data('step');
+                currentStep = stepIndex;
+                updateTrajViewer();
+            }
+        });
+        
+        // Add click event to toggle buttons for expanding/collapsing
+        $('.step-toggle').click(function(e) {
+            e.stopPropagation();
+            const $stepItem = $(this).closest('.step-list-item');
+            
+            // If this step is already expanded, collapse it
+            if ($stepItem.hasClass('expanded')) {
+                $stepItem.removeClass('expanded');
+            } else {
+                // Otherwise collapse all and expand this one
+                $('.step-list-item').removeClass('expanded');
+                $stepItem.addClass('expanded');
+            }
         });
     }
 
@@ -179,16 +207,22 @@ $(document).ready(function() {
         
         // Update active step in list
         $('.step-list-item').removeClass('active');
-        $(`.step-list-item[data-step="${currentStep}"]`).addClass('active');
-        
-        // Scroll to active step in sidebar
         const $activeStep = $(`.step-list-item[data-step="${currentStep}"]`);
+        $activeStep.addClass('active');
+        
+        // Auto-expand the active step and collapse others
+        $('.step-list-item').not($activeStep).removeClass('expanded');
+        
+        // First scroll to the active step
         const $sidebar = $('.trajectory-sidebar');
         
         if ($activeStep.length) {
             $sidebar.animate({
-                scrollTop: $activeStep.position().top + $sidebar.scrollTop() - $sidebar.height()/2 + $activeStep.height()/2
-            }, 300);
+                scrollTop: $activeStep.position().top + $sidebar.scrollTop() - 100 // 给顶部留出空间
+            }, 300, function() {
+                // 滚动完成后再展开步骤，避免滚动位置计算错误
+                $activeStep.addClass('expanded');
+            });
         }
         
         // Update mouse indicator

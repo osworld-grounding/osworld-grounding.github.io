@@ -174,15 +174,15 @@ body {
   margin-bottom: 0;
   color: #333;
   height: auto;
-  max-height: 550px;
+  max-height: 500px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
   border-bottom: none;
 }
 
 .trajectory-sidebar {
-  width: 350px;
-  flex: 0 0 350px;
+  width: 320px;
+  flex: 0 0 320px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -212,14 +212,40 @@ body {
   margin: 0 auto;
 }
 
-.user-query-section, .step-section {
-  padding: 20px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
 .user-query-section {
   flex: 0 0 auto;
   background-color: #f9f9f9;
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.query-marker {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #666;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.query-content {
+  padding-left: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 12px;
+  border: 1px solid #eee;
+}
+
+.query-content p {
+  color: #333;
+  line-height: 1.4;
+  margin: 0;
+  font-size: 0.85rem;
 }
 
 .step-section {
@@ -233,12 +259,14 @@ body {
 }
 
 .step-list-item {
-  padding: 12px 15px;
+  padding: 10px 15px;
   border-bottom: 1px solid #eee;
   cursor: pointer;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   transition: background-color 0.2s;
+  position: relative;
 }
 
 .step-list-item:hover {
@@ -250,44 +278,83 @@ body {
   border-left: 3px solid #888;
 }
 
+.step-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  min-height: 32px;
+}
+
+.step-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+}
+
 .step-number {
   font-weight: bold;
   margin-right: 10px;
   color: #666;
+  font-size: 0.85rem;
 }
 
 .step-title {
   color: #333;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.query-marker, .step-marker {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  background-color: #666;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.label {
-  font-size: 0.8rem;
+.step-toggle {
   color: #666;
-  letter-spacing: 1px;
+  transition: transform 0.3s ease;
 }
 
-.query-content, .step-content {
-  padding-left: 20px;
+.step-content {
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+  margin-top: 0;
+  padding-left: 25px;
+  padding-right: 10px;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  font-size: 0.8rem;
 }
 
-.query-content p, .step-content p {
-  color: #333;
-  line-height: 1.5;
+.step-list-item.expanded .step-content {
+  position: static;
+  max-height: 250px;
+  margin-top: 8px;
+  margin-bottom: 3px;
+  overflow-y: auto;
+  opacity: 1;
+  padding: 0 10px 8px 25px;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+}
+
+.step-list-item.expanded .step-toggle {
+  transform: rotate(180deg);
+}
+
+.chain-of-thought {
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 0.8rem;
+  color: #444;
+  line-height: 1.4;
+  white-space: pre-line;
+  border-left: 3px solid #ddd;
 }
 
 .read-more-toggle {
@@ -426,4 +493,22 @@ body {
 #traj-response.expanded {
   max-height: 400px;
   overflow-y: auto;
+}
+
+.step-content p {
+  color: #333;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 移除底部渐变效果，因为内容现在是嵌入式的 */
+.step-list-item.expanded .step-content:after {
+  display: none;
+}
+
+.label {
+  font-size: 0.75rem;
+  color: #666;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
