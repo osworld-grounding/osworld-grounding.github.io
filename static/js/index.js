@@ -120,6 +120,12 @@ $(document).ready(function() {
     let isPlaying = false;
     let playInterval = null;
 
+    let prevIndicatorIconState = {
+        left: null, // CSS string e.g., "100px"
+        top: null,  // CSS string
+        visible: false
+    };
+
     // Generate step list items
     function generateStepList() {
         const $stepList = $('.step-list');
@@ -256,90 +262,115 @@ $(document).ready(function() {
     // Update mouse indicator based on the action
     function updateMouseIndicator(step) {
         const $indicator = $('#mouse-indicator');
-        
-        if (!step.mouseAction) {
-            $indicator.hide();
-            // 移除任何可能存在的点击点和拖拽线
-            $('.click-point, .drag-line').remove();
-            return;
-        }
-        
+        const $trajectoryMain = $('.trajectory-main');
+        const interStepTransitionTime = 300; // Animation time between steps for the icon
+        const intraStepDragAnimTime = 500;   // Animation time for icon during a drag
+        const intraStepDragDelay = 250;    // Delay before starting intra-step drag animation
+
+        // --- 1. Preparations ---
+        $('.click-point, .drag-line').remove(); // Clear old specific visuals first
+        $indicator.stop(true, false);           // Stop any ongoing animation of the main icon
+
         const $image = $('#traj-image');
         const imgWidth = $image.width();
         const imgHeight = $image.height();
-        const origWidth = 1920; // 原始图像宽度
-        const origHeight = 1080; // 原始图像高度
-        
-        // 计算缩放比例
-        const scaleX = imgWidth / origWidth;
-        const scaleY = imgHeight / origHeight;
-        
-        // 重置任何现有的类
-        $indicator.removeClass('click-indicator drag-indicator');
-        
-        // 移除任何可能存在的点击点和拖拽线
-        $('.click-point, .drag-line').remove();
-        
-        if (step.mouseAction.type === "click") {
-            // 计算点击位置
-            const x = step.mouseAction.x * scaleX;
-            const y = step.mouseAction.y * scaleY;
-            
-            // 添加点击指示器类
-            $indicator.addClass('click-indicator');
-            
-            // 设置指示器位置
+
+        if (!imgWidth || imgWidth === 0 || !imgHeight || imgHeight === 0) { // Image not ready, hide and bail
+            $indicator.hide();
+            prevIndicatorIconState.visible = false;
+            return;
+        }
+        const scaleX = imgWidth / 1920;
+        const scaleY = imgHeight / 1080;
+
+        // --- 2. Current step has no mouse action ---
+        if (!step.mouseAction) {
+            if (prevIndicatorIconState.visible) {
+                $indicator.animate({ opacity: 0 }, interStepTransitionTime / 2, function() { $(this).hide(); });
+            } else {
+                $indicator.hide();
+            }
+            prevIndicatorIconState.visible = false;
+            return;
+        }
+
+        // --- 3. Current step HAS a mouse action ---
+        const action = step.mouseAction;
+        const newActionType = action.type;
+        const newIconClass = (newActionType === "click") ? 'click-indicator' : 'drag-indicator';
+
+        let iconStartTargetX = (newActionType === "click" ? action.x : action.startX) * scaleX;
+        let iconStartTargetY = (newActionType === "click" ? action.y : action.startY) * scaleY;
+
+        let iconEndTargetX = (newActionType === "click" ? iconStartTargetX : action.endX * scaleX);
+        let iconEndTargetY = (newActionType === "click" ? iconStartTargetY : action.endY * scaleY);
+
+        $indicator.removeClass('click-indicator drag-indicator').addClass(newIconClass);
+
+        // --- 4. Animate main icon to the START of the current action ---
+        if (prevIndicatorIconState.visible && prevIndicatorIconState.left !== null) {
             $indicator.css({
-                left: x + 'px',
-                top: y + 'px',
+                left: prevIndicatorIconState.left,
+                top: prevIndicatorIconState.top,
+                opacity: 1,
                 display: 'block'
             });
-            
-            // 添加点击点
-            const $clickPoint = $('<div class="click-point"></div>');
-            $('.trajectory-main').append($clickPoint);
-            $clickPoint.css({
-                left: x + 'px',
-                top: y + 'px'
-            });
-        } else if (step.mouseAction.type === "drag") {
-            // 计算拖拽起点和终点
-            const startX = step.mouseAction.startX * scaleX;
-            const startY = step.mouseAction.startY * scaleY;
-            const endX = step.mouseAction.endX * scaleX;
-            const endY = step.mouseAction.endY * scaleY;
-            
-            // 添加拖拽指示器类
-            $indicator.addClass('drag-indicator');
-            
-            // 设置指示器位置（起点）
+            $indicator.animate({
+                left: iconStartTargetX + 'px',
+                top: iconStartTargetY + 'px'
+            }, interStepTransitionTime, finishInterStepTransition);
+        } else {
             $indicator.css({
-                left: startX + 'px',
-                top: startY + 'px',
+                left: iconStartTargetX + 'px',
+                top: iconStartTargetY + 'px',
+                opacity: 0,
                 display: 'block'
             });
-            
-            // 计算拖拽线的长度和角度
-            const length = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
-            const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-            
-            // 添加拖拽线
-            const $dragLine = $('<div class="drag-line"></div>');
-            $('.trajectory-main').append($dragLine);
-            $dragLine.css({
-                left: startX + 'px',
-                top: startY + 'px',
-                width: length + 'px',
-                transform: `rotate(${angle}deg)`
-            });
-            
-            // 动画移动指示器
-            setTimeout(() => {
-                $indicator.animate({
-                    left: endX + 'px',
-                    top: endY + 'px'
-                }, 500);
-            }, 250);
+            $indicator.animate({ opacity: 1 }, interStepTransitionTime, finishInterStepTransition);
+        }
+
+        // --- 5. Callback after icon reaches START of current action ---
+        function finishInterStepTransition() {
+            prevIndicatorIconState.visible = true; 
+
+            if (newActionType === "click") {
+                const $clickPoint = $('<div class="click-point"></div>').css({
+                    left: iconStartTargetX + 'px',
+                    top: iconStartTargetY + 'px',
+                    opacity: 0
+                });
+                $trajectoryMain.append($clickPoint);
+                $clickPoint.animate({ opacity: 1 }, interStepTransitionTime / 2);
+
+                prevIndicatorIconState.left = iconStartTargetX + 'px';
+                prevIndicatorIconState.top = iconStartTargetY + 'px';
+
+            } else if (newActionType === "drag") {
+                const length = Math.sqrt(Math.pow(iconEndTargetX - iconStartTargetX, 2) + Math.pow(iconEndTargetY - iconStartTargetY, 2));
+                const angle = Math.atan2(iconEndTargetY - iconStartTargetY, iconEndTargetX - iconStartTargetX) * 180 / Math.PI;
+                const $dragLine = $('<div class="drag-line"></div>').css({
+                    left: iconStartTargetX + 'px',
+                    top: iconStartTargetY + 'px',
+                    width: length + 'px',
+                    transform: `rotate(${angle}deg)`,
+                    opacity: 0
+                });
+                $trajectoryMain.append($dragLine);
+                $dragLine.animate({ opacity: 1 }, interStepTransitionTime / 2);
+
+                prevIndicatorIconState.left = iconStartTargetX + 'px'; // Provisional: before intra-step anim
+                prevIndicatorIconState.top = iconStartTargetY + 'px';
+
+                setTimeout(() => {
+                    $indicator.animate({
+                        left: iconEndTargetX + 'px',
+                        top: iconEndTargetY + 'px'
+                    }, intraStepDragAnimTime, function() {
+                        prevIndicatorIconState.left = iconEndTargetX + 'px'; // Final after intra-step anim
+                        prevIndicatorIconState.top = iconEndTargetY + 'px';
+                    });
+                }, intraStepDragDelay);
+            }
         }
     }
 
@@ -374,7 +405,7 @@ $(document).ready(function() {
                     isPlaying = false;
                     $('#play-steps').html('<i class="fas fa-play"></i>');
                 }
-            }, 1000);
+            }, 1200);
         }
     }
 
