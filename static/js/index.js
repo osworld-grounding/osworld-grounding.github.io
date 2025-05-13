@@ -762,6 +762,33 @@ $(document).ready(function() {
     // Play button event listener
     $('#play-steps').click(togglePlaySteps);
     
+    // Replay button event listener
+    $('#replay-step').click(function() {
+        // 停止当前可能正在播放的内容
+        clearInterval(playInterval);
+        
+        // 重置到第一步
+        currentStep = 0;
+        updateTrajViewer();
+        
+        // 开始自动播放
+        isPlaying = true;
+        $('#play-steps').html('<i class="fas fa-pause"></i>');
+        
+        // 设置自动播放的间隔
+        playInterval = setInterval(() => {
+            if (currentStep < trajectoriesData[currentTrajectoryId].steps.length - 1) {
+                currentStep++;
+                updateTrajViewer();
+            } else {
+                // 到达最后一步后停止播放
+                clearInterval(playInterval);
+                isPlaying = false;
+                $('#play-steps').html('<i class="fas fa-play"></i>');
+            }
+        }, 800);
+    });
+    
     // Trajectory selector event listener
     $('.trajectory-tab').click(function() {
         const trajectoryId = $(this).data('trajectory-id');

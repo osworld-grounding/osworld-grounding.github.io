@@ -429,6 +429,10 @@ body {
   color: #666666;
 }
 
+.control-btn#replay-step {
+  color: #3273dc;
+}
+
 .control-btn:hover {
   background-color: #f0f0f0;
 }
