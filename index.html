@@ -4,7 +4,7 @@
 <!-- TODO: [50min] draw a curve and a smaller table for agentic ability-->
 <!-- TODO: [10min] Change colors for our model -->
 
-<!-- TODO: Add osworld showcase, and we don't need title -->
+<!-- TODO: Add osworld showcase, and we don't need title --> v
 <!-- TODO: add new paper link -->
 
 <!DOCTYPE html>
@@ -449,49 +449,71 @@
         </div>
         <!--/ Updates. -->
       </div>
-    </section>
-
-    <!-- TODO: decide which to put for benchmark page -->
-    <!-- Benchmark--three small pictures in three columns?, representing three kinds of tasks in OSWorld-G. -->
-    <section class="section">
-      <div class="container is-max-desktop">
-
+    </section>    
+    
+    <!-- Trajectory Visualization -->
+    <section class="section" id="trajectory-visualization">
+      <div class="container-fluid">
         <div class="columns is-centered has-text-centered">
-          <div class="content">
-            <h2 class="title is-3">Benchmark: OSWorld-G</h2>
-            <div class="content has-text-justified">
-              <p>
-                We develop <b>OSWORLD-G</b>, comprising <b></b>564</b> finely annotated
-                samples
-                that systematically cover text matching, element recognition,
-                layout understanding and fine-grained
-                manipulation, with annotations for the element types required to
-                solve each task. </p>
+          <div class="column is-10">
+            <h2 class="title is-3">Computer Use Showcase</h2>
+            
+            <!-- Add trajectory selector tabs -->
+            <div class="trajectory-selector">
+              <div class="tabs">
+                <ul>
+                  <li class="trajectory-tab" data-trajectory-id="72b810ef-4156-4d09-8f08-a0cf57e7cefe">
+                    <a>Format Document</a>
+                  </li>
+                  <li class="trajectory-tab is-active" data-trajectory-id="1e8df695-bd1b-45b3-b557-e7d599cf7597">
+                    <a>Spreadsheet Calculation</a>
+                  </li>
+                  <li class="trajectory-tab" data-trajectory-id="5316686e-5688-4115-be24-052037df599f-WOS">
+                    <a>File Explorer Settings</a>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Dataset--One big pipeline picture is enough -->
-    <section class="section">
-      <div class="container is-max-desktop">
-
-        <!-- B. -->
-        <div class="columns is-centered has-text-centered">
-          <div class="content">
-            <h2 class="title is-3">Dataset: Jedi</h2>
-            <div class="content has-text-justified">
-              <p>
-                To enable robust GUI grounding, we construct <b>JEDI</b>, the
-                world's largest multimodal dataset tailored for computer-use
-                grounding scenarios with <b></b>4 million</b> newly synthesized
-                examples through multi-perspective task decoupling.
-              </p>
+            
+            <div class="trajectory-container">
+              <div class="trajectory-sidebar">
+                <div class="user-query-section">
+                  <div class="query-marker">
+                    <span class="dot"></span>
+                    <span class="label">Task Instruction</span>
+                  </div>
+                  <div class="query-content">
+                    <p id="traj-instruction">I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?</p>
+                  </div>
+                </div>
+                
+                <ul class="step-list">
+                  <!-- Step list items will be dynamically generated here -->
+                </ul>
+              </div>
+              
+              <div class="trajectory-main">
+                <img id="traj-image" src="./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png" alt="Trajectory step 1">
+                <div id="mouse-indicator" class="mouse-indicator"></div>
+              </div>
             </div>
-
-            <img src="./static/images/data_construction.png"
-              alt="Data Construction" width="80%">
+            
+            <div class="controls-container">
+              <div class="step-controls">
+                <button class="control-btn" id="prev-step" disabled>
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="control-btn" id="play-steps">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn" id="next-step">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="control-btn" id="replay-step">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -605,12 +627,14 @@
             <p>
               We evaluate our approach on two computer use benchmarks in online environments: <b></b>OSWorld</b> and <b>WindowsAgentArena</b>. We employ: (1) <b>GPT-4o</b> as the high-level planner that processes user instructions, and (2) <b>JEDI</b> as the grounding model that converts the planner's low-level instructions into executable actions.
             </p>
+            <img src="./static/images/performance_comparison.png"
+            alt="Agentic Ability" width="80%">
+            <!-- todo: less thing in table -->
             <div class="table-container">
               <table class="comparison-table">
                 <thead>
                   <tr>
-                    <th>Planner</th>
-                    <th>Grounding</th>
+                    <th>Model</th>
                     <th>OS SR</th>
                     <th>WAA SR</th>
                   </tr>
@@ -661,32 +685,27 @@
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td class="model-name">GPT-4o</td>
-                    <td>Aguvis-72B (15 steps)</td>
+                    <td>GPT-4o + Aguvis-72B (15 steps)</td>
                     <td>17.0</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td class="model-name">GPT-4o</td>
-                    <td class="our-model">JeDi-3B (15 steps)</td>
+                    <td class="our-model">GPT-4o + JeDi-3B (15 steps)</td>
                     <td>22.4 <sub>±0.33</sub></td>
                     <td>29.1 <sub>±0.57</sub></td>
                   </tr>
                   <tr>
-                    <td class="model-name">GPT-4o</td>
-                    <td class="our-model">JeDi-7B (15 steps)</td>
+                    <td class="our-model">GPT-4o + JeDi-7B (15 steps)</td>
                     <td>22.74 <sub>±0.51</sub></td>
                     <td>30.2 <sub>±1.17</sub></td>
                   </tr>
                   <tr>
-                    <td class="model-name">GPT-4o</td>
-                    <td class="our-model">JeDi-7B (50 steps)</td>
+                    <td class="our-model">GPT-4o + JeDi-7B (50 steps)</td>
                     <td>25.02 <sub>±1.30</sub></td>
                     <td>32.8 <sub>±0.86</sub></td>
                   </tr>
                   <tr>
-                    <td class="model-name">GPT-4o</td>
-                    <td class="our-model">JeDi-7B (100 steps)</td>
+                    <td class="our-model">GPT-4o + JeDi-7B (100 steps)</td>
                     <td class="best-score">27.04 <sub>±1.81</sub></td>
                     <td class="best-score">33.7 <sub>±0.82</sub></td>
                   </tr>
@@ -699,69 +718,47 @@
       </div>
     </section>
 
-    <!-- Trajectory Visualization -->
-    <section class="section" id="trajectory-visualization">
-      <div class="container-fluid">
+    <!-- TODO: decide which to put for benchmark page -->
+    <!-- Benchmark--three small pictures in three columns?, representing three kinds of tasks in OSWorld-G. -->
+    <section class="section">
+      <div class="container is-max-desktop">
+
         <div class="columns is-centered has-text-centered">
-          <div class="column is-10">
-            <h2 class="title is-3">Computer Use Showcase</h2>
-            
-            <!-- Add trajectory selector tabs -->
-            <div class="trajectory-selector">
-              <div class="tabs">
-                <ul>
-                  <li class="trajectory-tab" data-trajectory-id="72b810ef-4156-4d09-8f08-a0cf57e7cefe">
-                    <a>Format Document</a>
-                  </li>
-                  <li class="trajectory-tab is-active" data-trajectory-id="1e8df695-bd1b-45b3-b557-e7d599cf7597">
-                    <a>Spreadsheet Calculation</a>
-                  </li>
-                  <li class="trajectory-tab" data-trajectory-id="5316686e-5688-4115-be24-052037df599f-WOS">
-                    <a>File Explorer Settings</a>
-                  </li>
-                </ul>
-              </div>
+          <div class="content">
+            <h2 class="title is-3">Benchmark: OSWorld-G</h2>
+            <div class="content has-text-justified">
+              <p>
+                We develop <b>OSWORLD-G</b>, comprising <b></b>564</b> finely annotated
+                samples
+                that systematically cover text matching, element recognition,
+                layout understanding and fine-grained
+                manipulation, with annotations for the element types required to
+                solve each task. </p>
             </div>
-            
-            <div class="trajectory-container">
-              <div class="trajectory-sidebar">
-                <div class="user-query-section">
-                  <div class="query-marker">
-                    <span class="dot"></span>
-                    <span class="label">Task Instruction</span>
-                  </div>
-                  <div class="query-content">
-                    <p id="traj-instruction">I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?</p>
-                  </div>
-                </div>
-                
-                <ul class="step-list">
-                  <!-- Step list items will be dynamically generated here -->
-                </ul>
-              </div>
-              
-              <div class="trajectory-main">
-                <img id="traj-image" src="./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png" alt="Trajectory step 1">
-                <div id="mouse-indicator" class="mouse-indicator"></div>
-              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dataset--One big pipeline picture is enough -->
+    <section class="section">
+      <div class="container is-max-desktop">
+
+        <!-- B. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="content">
+            <h2 class="title is-3">Dataset: Jedi</h2>
+            <div class="content has-text-justified">
+              <p>
+                To enable robust GUI grounding, we construct <b>JEDI</b>, the
+                world's largest multimodal dataset tailored for computer-use
+                grounding scenarios with <b></b>4 million</b> newly synthesized
+                examples through multi-perspective task decoupling.
+              </p>
             </div>
-            
-            <div class="controls-container">
-              <div class="step-controls">
-                <button class="control-btn" id="prev-step" disabled>
-                  <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="control-btn" id="play-steps">
-                  <i class="fas fa-play"></i>
-                </button>
-                <button class="control-btn" id="next-step">
-                  <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="control-btn" id="replay-step">
-                  <i class="fas fa-redo"></i>
-                </button>
-              </div>
-            </div>
+
+            <img src="./static/images/data_construction.png"
+              alt="Data Construction" width="80%">
           </div>
         </div>
       </div>
