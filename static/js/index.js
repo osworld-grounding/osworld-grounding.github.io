@@ -237,7 +237,7 @@ $(document).ready(function() {
                     action: "# Double-click the \"This PC\" icon to open File Explorer\npyautogui.doubleClick(36, 38, duration=1)",
                     response: "First, I need to open File Explorer. I can do this by double-clicking on the \"This PC\" icon on the desktop.",
                     description: "Open File Explorer",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_0_20250505@104449.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_0_20250505@104449.jpg",
                     mouseAction: { type: "click", x: 36, y: 38 }
                 },
                 {
@@ -245,7 +245,7 @@ $(document).ready(function() {
                     action: "# Click the \"View\" tab in File Explorer to access view options\npyautogui.click(353, 291, duration=1)",
                     response: "Now that File Explorer is open, I'll click on the \"View\" tab in the ribbon menu to access the view settings.",
                     description: "Click View tab",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_1_20250505@104508.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_1_20250505@104508.jpg",
                     mouseAction: { type: "click", x: 353, y: 291 }
                 },
                 {
@@ -253,7 +253,7 @@ $(document).ready(function() {
                     action: "# Click the \"Hidden items\" checkbox to show hidden files\npyautogui.click(933, 357, duration=1)",
                     response: "In the View tab, I'll find and click the \"Hidden items\" checkbox to show hidden files and folders.",
                     description: "Show hidden items",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_2_20250505@104610.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_2_20250505@104610.jpg",
                     mouseAction: { type: "click", x: 933, y: 357 }
                 },
                 {
@@ -261,7 +261,7 @@ $(document).ready(function() {
                     action: "# Click the \"Hidden items\" checkbox to show hidden files\npyautogui.click(1403, 974, duration=1)",
                     response: "I notice the \"Hidden items\" checkbox wasn't properly toggled, so I'll click it again to ensure hidden files are shown.",
                     description: "Toggle hidden items",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_3_20250505@104729.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_3_20250505@104729.jpg",
                     mouseAction: { type: "click", x: 1403, y: 974 }
                 },
                 {
@@ -269,7 +269,7 @@ $(document).ready(function() {
                     action: "# Click \"Options\" in the \"View\" tab to open Folder Options\npyautogui.click(363, 287, duration=1)",
                     response: "To show system files, I need to access additional settings. I'll click \"Options\" in the View tab to open the Folder Options dialog.",
                     description: "Access Folder Options",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_4_20250505@104847.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_4_20250505@104847.jpg",
                     mouseAction: { type: "click", x: 363, y: 287 }
                 },
                 {
@@ -277,7 +277,7 @@ $(document).ready(function() {
                     action: "# Click the \"Options\" button in the \"View\" tab to open Folder Options\npyautogui.click(1137, 342, duration=1)",
                     response: "I need to click the \"Options\" button on the right side of the View tab to open Folder Options.",
                     description: "Click Options button",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_5_20250505@105000.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_5_20250505@105000.jpg",
                     mouseAction: { type: "click", x: 1137, y: 342 }
                 },
                 {
@@ -285,7 +285,7 @@ $(document).ready(function() {
                     action: "# Click the \"View\" tab in the \"Folder Options\" window\npyautogui.click(273, 407, duration=1)",
                     response: "In the Folder Options dialog, I'll click on the \"View\" tab to access advanced view settings.",
                     description: "Select View tab in dialog",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_6_20250505@105108.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_6_20250505@105108.jpg",
                     mouseAction: { type: "click", x: 273, y: 407 }
                 },
                 {
@@ -293,7 +293,7 @@ $(document).ready(function() {
                     action: "# Click the option to show hidden files, folders, and drives\npyautogui.click(395, 685, duration=1)",
                     response: "In the View tab of Folder Options, I'll select the \"Show hidden files, folders, and drives\" option.",
                     description: "Show hidden files option",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_7_20250505@105218.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_7_20250505@105218.jpg",
                     mouseAction: { type: "click", x: 395, y: 685 }
                 },
                 {
@@ -301,7 +301,7 @@ $(document).ready(function() {
                     action: "# Click the \"Apply\" button to confirm changes in Folder Options\npyautogui.click(518, 816, duration=1)",
                     response: "I'll click the \"Apply\" button to save the changes I've made so far.",
                     description: "Apply settings",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_8_20250505@105334.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_8_20250505@105334.jpg",
                     mouseAction: { type: "click", x: 518, y: 816 }
                 },
                 {
@@ -309,7 +309,7 @@ $(document).ready(function() {
                     action: "# Uncheck \"Hide protected operating system files\" to show system files\npyautogui.click(389, 732, duration=1)",
                     response: "Now I need to uncheck the \"Hide protected operating system files\" option to show system files as well.",
                     description: "Locate system files option",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_9_20250505@105437.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_9_20250505@105437.jpg",
                     mouseAction: { type: "click", x: 389, y: 732 }
                 },
                 {
@@ -317,7 +317,7 @@ $(document).ready(function() {
                     action: "# Uncheck \"Hide protected operating system files\" to show system files\npyautogui.click(328, 731, duration=1)",
                     response: "I'll click the checkbox next to \"Hide protected operating system files\" to uncheck it and show system files.",
                     description: "Uncheck system files option",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_10_20250505@105547.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_10_20250505@105547.jpg",
                     mouseAction: { type: "click", x: 328, y: 731 }
                 },
                 {
@@ -325,7 +325,7 @@ $(document).ready(function() {
                     action: "# Click \"Yes\" in the warning dialog to confirm showing protected system files\npyautogui.click(1089, 560, duration=1)",
                     response: "A warning dialog appears, asking if I'm sure about showing protected operating system files. I'll click \"Yes\" to confirm.",
                     description: "Confirm warning",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_11_20250505@105652.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_11_20250505@105652.jpg",
                     mouseAction: { type: "click", x: 1089, y: 560 }
                 },
                 {
@@ -333,7 +333,7 @@ $(document).ready(function() {
                     action: "# Click \"OK\" to close the Folder Options window and apply changes\npyautogui.click(381, 812, duration=1)",
                     response: "Finally, I'll click the \"OK\" button to close the Folder Options dialog and apply all the changes.",
                     description: "Confirm all changes",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_12_20250505@105753.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_12_20250505@105753.jpg",
                     mouseAction: { type: "click", x: 381, y: 812 }
                 },
                 {
@@ -341,7 +341,7 @@ $(document).ready(function() {
                     action: "DONE",
                     response: "I've successfully updated File Explorer's view settings to show both hidden files and system files. These changes will now persist across all File Explorer windows.",
                     description: "Task completed",
-                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_13_20250505@105839.png",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_13_20250505@105839.jpg",
                     mouseAction: null
                 }
             ],
