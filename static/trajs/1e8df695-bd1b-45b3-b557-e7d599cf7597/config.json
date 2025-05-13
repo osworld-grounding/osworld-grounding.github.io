@@ -1,0 +1,83 @@
+{
+    "id": "1e8df695-bd1b-45b3-b557-e7d599cf7597",
+    "snapshot": "libreoffice_calc",
+    "instruction": "Add a new column named \"Profit\" and calculate the profit for each week by subtracting \"COGS\" from \"Sales\" in that column.",
+    "source": "SheetCopilot@203",
+    "config": [
+        {
+            "type": "download",
+            "parameters": {
+                "files": [
+                    {
+                        "url": "https://agent-files.deva.msh.team/osworld/benchmark_files/libreoffice_calc/c7a29879-c85e-414c-9595-efb21248ee1a.xlsx",
+                        "path": "/home/user/WeeklySales.xlsx"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "open",
+            "parameters": {
+                "path": "/home/user/WeeklySales.xlsx"
+            }
+        }
+    ],
+    "trajectory": "trajectories/1e8df695-bd1b-45b3-b557-e7d599cf7597",
+    "related_apps": [
+        "libreoffice_calc"
+    ],
+    "evaluator": {
+        "postconfig": [
+            {
+                "type": "activate_window",
+                "parameters": {
+                    "window_name": "WeeklySales.xlsx - LibreOffice Calc",
+                    "strict": true
+                }
+            },
+            {
+                "type": "sleep",
+                "parameters": {
+                    "seconds": 0.5
+                }
+            },
+            {
+                "type": "execute",
+                "parameters": {
+                    "command": [
+                        "python",
+                        "-c",
+                        "import pyautogui; pyautogui.hotkey(\"ctrl\", \"s\");"
+                    ]
+                }
+            },
+            {
+                "type": "sleep",
+                "parameters": {
+                    "seconds": 0.5
+                }
+            }
+        ],
+        "func": "compare_table",
+        "expected": {
+            "type": "cloud_file",
+            "path": "https://agent-files.deva.msh.team/osworld/benchmark_files/libreoffice_calc/e03f2d09-73a8-4901-ba77-d3528b7c8597.xlsx",
+            "dest": "6_WeeklySales_gt1.xlsx"
+        },
+        "result": {
+            "type": "vm_file",
+            "path": "/home/user/WeeklySales.xlsx",
+            "dest": "WeeklySales.xlsx"
+        },
+        "options": {
+            "rules": [
+                {
+                    "type": "sheet_data",
+                    "sheet_idx0": 0,
+                    "sheet_idx1": "EI0"
+                }
+            ]
+        }
+    },
+    "domain": "libreoffice_calc"
+}

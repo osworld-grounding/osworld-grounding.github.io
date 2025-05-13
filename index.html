@@ -52,7 +52,7 @@
       .step-action-details code {
         display: inline-block; 
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-        font-size: 0.65em; /* 更小的基础字体尺寸 */
+        font-size: 0.75em; /* 更小的基础字体尺寸 */
         padding: 4px 8px; /* 为整个代码块添加内边距 */
         margin-top: 5px;
         margin-bottom: 10px;
@@ -158,6 +158,32 @@
         right: -4px; /* Position the L-shape so its corner (eventual V tip) is at the line's end */
                      /* Needs adjustment: - (height_of_L_corner_element / 2 / sqrt(2) ) approx */
         transform: translateY(-50%) rotate(-45deg); /* Rotate L to V, V points right */
+      }
+
+      /* Trajectory selector styles */
+      .trajectory-selector {
+        margin-bottom: 1.5rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .trajectory-selector .tabs {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .trajectory-selector .tabs ul {
+        border-bottom-color: #dbdbdb;
+        justify-content: center;
+      }
+
+      .trajectory-selector .tabs li.is-active a {
+        border-bottom-color: #9966cc;
+        color: #9966cc;
+      }
+
+      .trajectory-tab {
+        cursor: pointer;
       }
     </style>
     <script
@@ -674,11 +700,23 @@
       <div class="container-fluid">
         <div class="columns is-centered has-text-centered">
           <div class="column is-10">
-            <h2 class="title is-3">OSWorld Showcase</h2>
-            <div class="content has-text-justified">
-              <p>
-                Below is a visualization of an agent trajectory, showing how the agent completes a task step by step.
-              </p>
+            <h2 class="title is-3">Computer Use Showcase</h2>
+            
+            <!-- Add trajectory selector tabs -->
+            <div class="trajectory-selector">
+              <div class="tabs">
+                <ul>
+                  <li class="trajectory-tab" data-trajectory-id="72b810ef-4156-4d09-8f08-a0cf57e7cefe">
+                    <a>Format Document</a>
+                  </li>
+                  <li class="trajectory-tab is-active" data-trajectory-id="1e8df695-bd1b-45b3-b557-e7d599cf7597">
+                    <a>Spreadsheet Calculation</a>
+                  </li>
+                  <li class="trajectory-tab" data-trajectory-id="5316686e-5688-4115-be24-052037df599f-WOS">
+                    <a>File Explorer Settings</a>
+                  </li>
+                </ul>
+              </div>
             </div>
             
             <div class="trajectory-container">

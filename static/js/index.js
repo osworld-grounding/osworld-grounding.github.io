@@ -74,64 +74,314 @@ $(document).ready(function() {
     $('#interpolation-slider').prop('max', NUM_INTERP_FRAMES - 1);
 
     bulmaSlider.attach();
+    
+    // Add keyboard action styles to the head
+    $('head').append(`
+        <style>
+            .keyboard-indicator {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                padding: 10px 15px;
+                border-radius: 5px;
+                font-family: monospace;
+                font-size: 16px;
+                z-index: 100;
+                opacity: 0;
+                transition: opacity 0.3s;
+                pointer-events: none;
+                max-width: 80%;
+                text-align: center;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                border: 1px solid #555;
+            }
+            
+            .type-indicator {
+                /* 移除左侧绿色边框 */
+            }
+            
+            .press-indicator {
+                /* 移除左侧蓝色边框 */
+            }
+        </style>
+    `);
+
+    // Create keyboard indicator element
+    const $keyboardIndicator = $('<div>', {
+        class: 'keyboard-indicator',
+        css: {
+            opacity: 0
+        }
+    });
+    
+    // Variables to track previous indicator states
+    const prevIndicatorIconState = { visible: false, left: null, top: null };
+    
+    // Add keyboard indicator to the document when DOM is ready
+    $(document).ready(function() {
+        $('body').append($keyboardIndicator);
+    });
 
     // Trajectory visualization
-    const trajectoryData = {
-        id: "72b810ef-4156-4d09-8f08-a0cf57e7cefe",
-        steps: [
-            {
-                stepNum: 1,
-                action: "# Select the last paragraph by clicking and dragging from the start to the end of the paragraph\npyautogui.click(657, 639,  duration=1)",
-                response: "I need to add strikethrough formatting to the last paragraph in this document.\n\nFirst, I need to select the text of the last paragraph:\n1. I can see that the document has multiple paragraphs of text\n2. The last paragraph appears to start with 'Each student will be responsible for...' and continues to the end of the visible text\n3. To select this paragraph, I'll position my cursor at the beginning of the paragraph\n\nI'll click at coordinates (657, 639) which appears to be at the beginning of the last paragraph.",
-                description: "Select the paragraph",
-                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_0_20250503@074819.png",
-                mouseAction: { type: "click", x: 657, y: 639 }
-            },
-            {
-                stepNum: 2,
-                action: "# Click and drag to select the entire last paragraph\npyautogui.dragTo(657, 739, duration=1, button='left')",
-                response: "Now that I've positioned my cursor at the beginning of the last paragraph, I need to select all the text in this paragraph:\n\n1. I'll drag from the current position (where I just clicked) down to the end of the paragraph\n2. I need to click and hold the left mouse button while dragging to select the text\n3. The paragraph appears to end around position (657, 739)\n\nI'll drag from the current position to (657, 739) to select the entire paragraph text. This will allow me to apply the strikethrough formatting to the whole paragraph in the next step.",
-                description: "Drag to select the text",
-                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png",
-                mouseAction: { type: "drag", startX: 657, startY: 639, endX: 657, endY: 739 }
-            },
-            {
-                stepNum: 3,
-                action: "# Click the strikethrough button in the toolbar\npyautogui.click(813, 146,  duration=1)",
-                response: "Now that I have selected the entire paragraph, I need to apply the strikethrough formatting:\n\n1. Looking at the toolbar at the top of the LibreOffice Writer window\n2. I can see various formatting options including bold, italic, underline, etc.\n3. The strikethrough button appears to be located at coordinates (813, 146)\n4. This button will apply the strikethrough formatting to the selected text\n\nI'll click on the strikethrough button in the toolbar. This will apply strikethrough formatting to the selected paragraph, indicating that it's redundant as requested.",
-                description: "Apply strikethrough formatting",
-                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_2_20250503@074853.png",
-                mouseAction: { type: "click", x: 813, y: 146 }
-            },
-            {
-                stepNum: 4,
-                action: "DONE",
-                response: "I've successfully completed the task of applying strikethrough formatting to the last paragraph:\n\n1. I identified the last paragraph in the document\n2. I selected the entire paragraph by clicking at its beginning and dragging to its end\n3. I applied strikethrough formatting by clicking the strikethrough button in the toolbar\n4. The formatting has been applied correctly, and the paragraph now appears with a line through it\n\nThe task is now complete. The strikethrough formatting visually indicates that the paragraph is redundant as requested in the peer review process.",
-                description: "Task completed",
-                image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_3_20250503@074916.png",
-                mouseAction: null
-            }
-        ],
-        instruction: "I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?"
+    const trajectoriesData = {
+        // Document formatting trajectory
+        "72b810ef-4156-4d09-8f08-a0cf57e7cefe": {
+            id: "72b810ef-4156-4d09-8f08-a0cf57e7cefe",
+            steps: [
+                {
+                    stepNum: 1,
+                    action: "# Select the last paragraph by clicking and dragging from the start to the end of the paragraph\npyautogui.click(657, 639,  duration=1)",
+                    response: "I need to add strikethrough formatting to the last paragraph in this document.\n\nFirst, I need to select the text of the last paragraph:\n1. I can see that the document has multiple paragraphs of text\n2. The last paragraph appears to start with 'Each student will be responsible for...' and continues to the end of the visible text\n3. To select this paragraph, I'll position my cursor at the beginning of the paragraph\n\nI'll click at coordinates (657, 639) which appears to be at the beginning of the last paragraph.",
+                    description: "Select the paragraph",
+                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_0_20250503@074819.png",
+                    mouseAction: { type: "click", x: 657, y: 639 }
+                },
+                {
+                    stepNum: 2,
+                    action: "# Click and drag to select the entire last paragraph\npyautogui.dragTo(657, 739, duration=1, button='left')",
+                    response: "Now that I've positioned my cursor at the beginning of the last paragraph, I need to select all the text in this paragraph:\n\n1. I'll drag from the current position (where I just clicked) down to the end of the paragraph\n2. I need to click and hold the left mouse button while dragging to select the text\n3. The paragraph appears to end around position (657, 739)\n\nI'll drag from the current position to (657, 739) to select the entire paragraph text. This will allow me to apply the strikethrough formatting to the whole paragraph in the next step.",
+                    description: "Drag to select the text",
+                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png",
+                    mouseAction: { type: "drag", startX: 657, startY: 639, endX: 657, endY: 739 }
+                },
+                {
+                    stepNum: 3,
+                    action: "# Click the strikethrough button in the toolbar\npyautogui.click(813, 146,  duration=1)",
+                    response: "Now that I have selected the entire paragraph, I need to apply the strikethrough formatting:\n\n1. Looking at the toolbar at the top of the LibreOffice Writer window\n2. I can see various formatting options including bold, italic, underline, etc.\n3. The strikethrough button appears to be located at coordinates (813, 146)\n4. This button will apply the strikethrough formatting to the selected text\n\nI'll click on the strikethrough button in the toolbar. This will apply strikethrough formatting to the selected paragraph, indicating that it's redundant as requested.",
+                    description: "Apply strikethrough formatting",
+                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_2_20250503@074853.png",
+                    mouseAction: { type: "click", x: 813, y: 146 }
+                },
+                {
+                    stepNum: 4,
+                    action: "DONE",
+                    response: "I've successfully completed the task of applying strikethrough formatting to the last paragraph:\n\n1. I identified the last paragraph in the document\n2. I selected the entire paragraph by clicking at its beginning and dragging to its end\n3. I applied strikethrough formatting by clicking the strikethrough button in the toolbar\n4. The formatting has been applied correctly, and the paragraph now appears with a line through it\n\nThe task is now complete. The strikethrough formatting visually indicates that the paragraph is redundant as requested in the peer review process.",
+                    description: "Task completed",
+                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_3_20250503@074916.png",
+                    mouseAction: null
+                }
+            ],
+            instruction: "I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?"
+        },
+        
+        // Spreadsheet calculation trajectory
+        "1e8df695-bd1b-45b3-b557-e7d599cf7597": {
+            id: "1e8df695-bd1b-45b3-b557-e7d599cf7597",
+            steps: [
+                {
+                    stepNum: 1,
+                    action: "# Click on cell D1 to prepare to add the \"Profit\" column header\npyautogui.click(427, 273)",
+                    response: "I need to add a profit calculation column to this spreadsheet. Looking at the existing data, I can see columns for Week, Sales, and COGS. I'll start by adding a new column header called 'Profit' in cell D1, then create a formula to calculate profit (Sales - COGS) for each week.",
+                    description: "Click on cell D1",
+                    image: "./static/trajs/1e8df695-bd1b-45b3-b557-e7d599cf7597/step_0_20250503@081210.png",
+                    mouseAction: { type: "click", x: 427, y: 273 }
+                },
+                {
+                    stepNum: 2,
+                    action: "# Type \"Profit\" in cell D1 to set the column header\npyautogui.typewrite('Profit')",
+                    response: "Now I'll type 'Profit' to create the column header in cell D1.",
+                    description: "Type 'Profit' header",
+                    image: "./static/trajs/1e8df695-bd1b-45b3-b557-e7d599cf7597/step_1_20250503@081224.png",
+                    keyboardAction: { type: "type", text: "Profit" }
+                },
+                {
+                    stepNum: 3,
+                    action: "# Click on cell D2 to prepare to enter the profit formula for Week 1\npyautogui.click(408, 289)",
+                    response: "With the header in place, I'll now click on cell D2 to add the profit formula for Week 1.",
+                    description: "Click on cell D2",
+                    image: "./static/trajs/1e8df695-bd1b-45b3-b557-e7d599cf7597/step_2_20250503@081241.png",
+                    mouseAction: { type: "click", x: 408, y: 289 }
+                },
+                {
+                    stepNum: 4,
+                    action: "# Enter the profit formula for Week 1 in cell D2\npyautogui.typewrite('=B2-C2')",
+                    response: "In cell D2, I'll enter the formula '=B2-C2' to calculate profit by subtracting COGS (C2) from Sales (B2) for Week 1.",
+                    description: "Enter formula =B2-C2",
+                    image: "./static/trajs/1e8df695-bd1b-45b3-b557-e7d599cf7597/step_3_20250503@081304.png",
+                    keyboardAction: { type: "type", text: "=B2-C2" }
+                },
+                {
+                    stepNum: 5,
+                    action: "# Press \"Enter\" to confirm the formula in D2\npyautogui.press('enter')",
+                    response: "I'll press Enter to confirm and apply the formula, which will calculate the profit for Week 1.",
+                    description: "Confirm formula",
+                    image: "./static/trajs/1e8df695-bd1b-45b3-b557-e7d599cf7597/step_4_20250503@081329.png",
+                    keyboardAction: { type: "press", key: "Enter" }
+                },
+                {
+                    stepNum: 6,
+                    action: "# Click and drag the fill handle from D2 to D11 to copy the profit formula down\npyautogui.click(464, 300)\npyautogui.dragTo(427, 466, duration=1, button='left')",
+                    response: "Finally, I'll click and drag the cell's fill handle from D2 down to D11 to copy the profit formula to all rows. This will automatically adjust the formula references for each row.",
+                    description: "Copy formula to all rows",
+                    image: "./static/trajs/1e8df695-bd1b-45b3-b557-e7d599cf7597/step_5_20250503@081350.png",
+                    mouseAction: { type: "drag", startX: 464, startY: 300, endX: 427, endY: 466 }
+                },
+                {
+                    stepNum: 7,
+                    action: "DONE",
+                    response: "I've successfully completed the task by adding a 'Profit' column with the formula that calculates profit (Sales - COGS) for each week. The profit values are now visible in column D for all ten weeks.",
+                    description: "Task completed",
+                    image: "./static/trajs/1e8df695-bd1b-45b3-b557-e7d599cf7597/step_6_20250503@081416.png",
+                    mouseAction: null
+                }
+            ],
+            instruction: "Add a new column named \"Profit\" and calculate the profit for each week by subtracting \"COGS\" from \"Sales\" in that column."
+        },
+        
+        // File explorer settings trajectory
+        "5316686e-5688-4115-be24-052037df599f-WOS": {
+            id: "5316686e-5688-4115-be24-052037df599f-WOS",
+            steps: [
+                {
+                    stepNum: 1,
+                    action: "# Double-click the \"This PC\" icon to open File Explorer\npyautogui.doubleClick(36, 38, duration=1)",
+                    response: "First, I need to open File Explorer. I can do this by double-clicking on the \"This PC\" icon on the desktop.",
+                    description: "Open File Explorer",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_0_20250505@104449.png",
+                    mouseAction: { type: "click", x: 36, y: 38 }
+                },
+                {
+                    stepNum: 2,
+                    action: "# Click the \"View\" tab in File Explorer to access view options\npyautogui.click(353, 291, duration=1)",
+                    response: "Now that File Explorer is open, I'll click on the \"View\" tab in the ribbon menu to access the view settings.",
+                    description: "Click View tab",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_1_20250505@104508.png",
+                    mouseAction: { type: "click", x: 353, y: 291 }
+                },
+                {
+                    stepNum: 3,
+                    action: "# Click the \"Hidden items\" checkbox to show hidden files\npyautogui.click(933, 357, duration=1)",
+                    response: "In the View tab, I'll find and click the \"Hidden items\" checkbox to show hidden files and folders.",
+                    description: "Show hidden items",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_2_20250505@104610.png",
+                    mouseAction: { type: "click", x: 933, y: 357 }
+                },
+                {
+                    stepNum: 4,
+                    action: "# Click the \"Hidden items\" checkbox to show hidden files\npyautogui.click(1403, 974, duration=1)",
+                    response: "I notice the \"Hidden items\" checkbox wasn't properly toggled, so I'll click it again to ensure hidden files are shown.",
+                    description: "Toggle hidden items",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_3_20250505@104729.png",
+                    mouseAction: { type: "click", x: 1403, y: 974 }
+                },
+                {
+                    stepNum: 5,
+                    action: "# Click \"Options\" in the \"View\" tab to open Folder Options\npyautogui.click(363, 287, duration=1)",
+                    response: "To show system files, I need to access additional settings. I'll click \"Options\" in the View tab to open the Folder Options dialog.",
+                    description: "Access Folder Options",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_4_20250505@104847.png",
+                    mouseAction: { type: "click", x: 363, y: 287 }
+                },
+                {
+                    stepNum: 6,
+                    action: "# Click the \"Options\" button in the \"View\" tab to open Folder Options\npyautogui.click(1137, 342, duration=1)",
+                    response: "I need to click the \"Options\" button on the right side of the View tab to open Folder Options.",
+                    description: "Click Options button",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_5_20250505@105000.png",
+                    mouseAction: { type: "click", x: 1137, y: 342 }
+                },
+                {
+                    stepNum: 7,
+                    action: "# Click the \"View\" tab in the \"Folder Options\" window\npyautogui.click(273, 407, duration=1)",
+                    response: "In the Folder Options dialog, I'll click on the \"View\" tab to access advanced view settings.",
+                    description: "Select View tab in dialog",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_6_20250505@105108.png",
+                    mouseAction: { type: "click", x: 273, y: 407 }
+                },
+                {
+                    stepNum: 8,
+                    action: "# Click the option to show hidden files, folders, and drives\npyautogui.click(395, 685, duration=1)",
+                    response: "In the View tab of Folder Options, I'll select the \"Show hidden files, folders, and drives\" option.",
+                    description: "Show hidden files option",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_7_20250505@105218.png",
+                    mouseAction: { type: "click", x: 395, y: 685 }
+                },
+                {
+                    stepNum: 9,
+                    action: "# Click the \"Apply\" button to confirm changes in Folder Options\npyautogui.click(518, 816, duration=1)",
+                    response: "I'll click the \"Apply\" button to save the changes I've made so far.",
+                    description: "Apply settings",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_8_20250505@105334.png",
+                    mouseAction: { type: "click", x: 518, y: 816 }
+                },
+                {
+                    stepNum: 10,
+                    action: "# Uncheck \"Hide protected operating system files\" to show system files\npyautogui.click(389, 732, duration=1)",
+                    response: "Now I need to uncheck the \"Hide protected operating system files\" option to show system files as well.",
+                    description: "Locate system files option",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_9_20250505@105437.png",
+                    mouseAction: { type: "click", x: 389, y: 732 }
+                },
+                {
+                    stepNum: 11,
+                    action: "# Uncheck \"Hide protected operating system files\" to show system files\npyautogui.click(328, 731, duration=1)",
+                    response: "I'll click the checkbox next to \"Hide protected operating system files\" to uncheck it and show system files.",
+                    description: "Uncheck system files option",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_10_20250505@105547.png",
+                    mouseAction: { type: "click", x: 328, y: 731 }
+                },
+                {
+                    stepNum: 12,
+                    action: "# Click \"Yes\" in the warning dialog to confirm showing protected system files\npyautogui.click(1089, 560, duration=1)",
+                    response: "A warning dialog appears, asking if I'm sure about showing protected operating system files. I'll click \"Yes\" to confirm.",
+                    description: "Confirm warning",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_11_20250505@105652.png",
+                    mouseAction: { type: "click", x: 1089, y: 560 }
+                },
+                {
+                    stepNum: 13,
+                    action: "# Click \"OK\" to close the Folder Options window and apply changes\npyautogui.click(381, 812, duration=1)",
+                    response: "Finally, I'll click the \"OK\" button to close the Folder Options dialog and apply all the changes.",
+                    description: "Confirm all changes",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_12_20250505@105753.png",
+                    mouseAction: { type: "click", x: 381, y: 812 }
+                },
+                {
+                    stepNum: 14,
+                    action: "DONE",
+                    response: "I've successfully updated File Explorer's view settings to show both hidden files and system files. These changes will now persist across all File Explorer windows.",
+                    description: "Task completed",
+                    image: "./static/trajs/5316686e-5688-4115-be24-052037df599f-WOS/step_13_20250505@105839.png",
+                    mouseAction: null
+                }
+            ],
+            instruction: "Update file explorer view settings to show hidden and system files."
+        }
     };
 
+    let currentTrajectoryId = "1e8df695-bd1b-45b3-b557-e7d599cf7597";
     let currentStep = 0;
-    const totalSteps = trajectoryData.steps.length;
     let isPlaying = false;
     let playInterval = null;
 
-    let prevIndicatorIconState = {
-        left: null, // CSS string e.g., "100px"
-        top: null,  // CSS string
-        visible: false
-    };
+    // Function to load and display a specific trajectory
+    function loadTrajectory(trajectoryId) {
+        // Reset state
+        clearInterval(playInterval);
+        isPlaying = false;
+        currentStep = 0;
+        currentTrajectoryId = trajectoryId;
+        
+        // Update active tab
+        $('.trajectory-tab').removeClass('is-active');
+        $(`[data-trajectory-id="${trajectoryId}"]`).addClass('is-active');
+        
+        // Set instruction text
+        $('#traj-instruction').text(trajectoriesData[trajectoryId].instruction);
+        
+        // Generate step list and update viewer
+        generateStepList();
+        updateTrajViewer();
+    }
 
     // Generate step list items
     function generateStepList() {
         const $stepList = $('.step-list');
         $stepList.empty();
         
-        trajectoryData.steps.forEach((step, index) => {
+        const totalSteps = trajectoriesData[currentTrajectoryId].steps.length;
+        
+        trajectoriesData[currentTrajectoryId].steps.forEach((step, index) => {
             let actionDisplay = step.action;
             if (actionDisplay === "DONE") {
                 actionDisplay = `<code><span class="action-type">COMPLETE</span></code>`;
@@ -156,6 +406,30 @@ $(document).ready(function() {
                 
                 // Create HTML with spans for styling
                 actionDisplay = `<code><span class="action-type">${actionType}</span> <span class="action-coords">${coords}</span></code>`;
+            } else if (step.action.toLowerCase().includes('typewrite') || step.action.toLowerCase().includes('type ')) {
+                // Extract the text being typed from the action string
+                let match = step.action.match(/typewrite\(['"](.+?)['"]\)/i) || step.action.match(/type ['"](.+?)['"]/i);
+                let typedText = match ? match[1] : 'text';
+                
+                // Create HTML with spans for styling
+                actionDisplay = `<code><span class="action-type">TYPE</span> <span class="action-coords">"${typedText}"</span></code>`;
+                
+                // Add a keyboardAction property to the step
+                if (!step.keyboardAction) {
+                    step.keyboardAction = { type: "type", text: typedText };
+                }
+            } else if (step.action.toLowerCase().includes('press')) {
+                // Extract the key being pressed from the action string
+                let match = step.action.match(/press\(['"](.+?)['"]\)/i) || step.action.match(/press ['"](.+?)['"]/i);
+                let key = match ? match[1] : 'key';
+                
+                // Create HTML with spans for styling
+                actionDisplay = `<code><span class="action-type">PRESS</span> <span class="action-coords">"${key}"</span></code>`;
+                
+                // Add a keyboardAction property to the step
+                if (!step.keyboardAction) {
+                    step.keyboardAction = { type: "press", key: key };
+                }
             } else {
                 // Fallback if action is not DONE and no mouseAction
                 actionDisplay = `<code>${step.description}</code>`; // Wrapped in code tag for consistent styling
@@ -181,8 +455,6 @@ $(document).ready(function() {
         // Add click event to step items for navigation
         $('.step-list-item').click(function(e) {
             // Only handle navigation clicks if not clicking on toggle or expanded content
-            // Since toggle is removed, this condition can be simplified or might not be needed
-            // if structure prevents accidental clicks. For now, keep it general.
             if (!$(e.target).closest('.step-toggle').length && !$(e.target).closest('.step-action-details').length || $(e.target).closest('.step-header').length) {
                 const stepIndex = $(this).data('step');
                 if (currentStep !== stepIndex) { // Prevent re-processing if already active
@@ -205,15 +477,11 @@ $(document).ready(function() {
 
     // Initialize trajectory viewer
     function updateTrajViewer() {
-        const step = trajectoryData.steps[currentStep];
+        const totalSteps = trajectoriesData[currentTrajectoryId].steps.length;
+        const step = trajectoriesData[currentTrajectoryId].steps[currentStep];
         
         // Update main image
         $('#traj-image').attr('src', step.image);
-        
-        // Update query if it's the first step
-        if (currentStep === 0) {
-            $('#traj-instruction').text(trajectoryData.instruction);
-        }
         
         // Update button states
         $('#prev-step').prop('disabled', currentStep === 0);
@@ -280,6 +548,7 @@ $(document).ready(function() {
         // --- 1. Preparations ---
         $('.click-point, .drag-line').remove(); // Clear old specific visuals first
         $indicator.stop(true, false);           // Stop any ongoing animation of the main icon
+        $keyboardIndicator.stop(true, false).css({ opacity: 0 }); // Hide keyboard indicator
 
         const $image = $('#traj-image');
         const imgWidth = $image.width();
@@ -293,7 +562,63 @@ $(document).ready(function() {
         const scaleX = imgWidth / 1920;
         const scaleY = imgHeight / 1080;
 
-        // --- 2. Current step has no mouse action ---
+        // --- 2. Check for keyboard action ---
+        if (step.keyboardAction) {
+            // Hide mouse indicator if it was visible
+            if (prevIndicatorIconState.visible) {
+                $indicator.animate({ opacity: 0 }, interStepTransitionTime / 2, function() { $(this).hide(); });
+                prevIndicatorIconState.visible = false;
+            } else {
+                $indicator.hide();
+            }
+            
+            // Configure keyboard indicator based on action type
+            $keyboardIndicator.removeClass('type-indicator press-indicator');
+            
+            if (step.keyboardAction.type === "type") {
+                $keyboardIndicator.addClass('type-indicator');
+                $keyboardIndicator.html(`Typing: "${step.keyboardAction.text}"`);
+            } else if (step.keyboardAction.type === "press") {
+                $keyboardIndicator.addClass('press-indicator');
+                
+                // 对于Enter键使用SVG图标
+                if (step.keyboardAction.key.toLowerCase() === 'enter') {
+                    $keyboardIndicator.html(`
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <img src="./static/images/enter-key.svg" alt="Enter" style="width: 40px; height: 40px; filter: invert(1);">
+                        </div>
+                    `);
+                } else {
+                    $keyboardIndicator.html(`Pressing: [${step.keyboardAction.key.toUpperCase()}]`);
+                }
+            }
+            
+            // Position the keyboard indicator
+            const imagePos = $image.offset();
+            const imageCenter = {
+                left: imagePos.left + imgWidth / 2,
+                top: imagePos.top + imgHeight / 2
+            };
+            
+            // Position indicator after it has content so we can calculate its width
+            $keyboardIndicator.css({
+                opacity: 0,
+                display: 'block'
+            });
+            
+            // Calculate position after rendering (so we know its dimensions)
+            setTimeout(() => {
+                const indicatorWidth = $keyboardIndicator.outerWidth();
+                $keyboardIndicator.css({
+                    left: imageCenter.left - (indicatorWidth / 2),
+                    top: imageCenter.top + 100  // 从-100改为+50，将指示器往下移动
+                }).animate({ opacity: 1 }, interStepTransitionTime);
+            }, 0);
+            
+            return;
+        }
+
+        // --- 3. Current step has no action at all ---
         if (!step.mouseAction) {
             if (prevIndicatorIconState.visible) {
                 $indicator.animate({ opacity: 0 }, interStepTransitionTime / 2, function() { $(this).hide(); });
@@ -304,7 +629,7 @@ $(document).ready(function() {
             return;
         }
 
-        // --- 3. Current step HAS a mouse action ---
+        // --- 4. Current step HAS a mouse action ---
         const action = step.mouseAction;
         const newActionType = action.type;
         const newIconClass = (newActionType === "click") ? 'click-indicator' : 'drag-indicator';
@@ -317,7 +642,7 @@ $(document).ready(function() {
 
         $indicator.removeClass('click-indicator drag-indicator').addClass(newIconClass);
 
-        // --- 4. Animate main icon to the START of the current action ---
+        // --- 5. Animate main icon to the START of the current action ---
         if (prevIndicatorIconState.visible && prevIndicatorIconState.left !== null) {
             $indicator.css({
                 left: prevIndicatorIconState.left,
@@ -339,7 +664,7 @@ $(document).ready(function() {
             $indicator.animate({ opacity: 1 }, interStepTransitionTime, finishInterStepTransition);
         }
 
-        // --- 5. Callback after icon reaches START of current action ---
+        // --- 6. Callback after icon reaches START of current action ---
         function finishInterStepTransition() {
             prevIndicatorIconState.visible = true; 
 
@@ -397,7 +722,7 @@ $(document).ready(function() {
             $('#play-steps').html('<i class="fas fa-pause"></i>');
             
             // Reset to first step if we're at the end
-            if (currentStep === totalSteps - 1) {
+            if (currentStep === trajectoriesData[currentTrajectoryId].steps.length - 1) {
                 currentStep = 0;
             }
             
@@ -406,7 +731,7 @@ $(document).ready(function() {
             
             // Set interval for automatic advancement
             playInterval = setInterval(() => {
-                if (currentStep < totalSteps - 1) {
+                if (currentStep < trajectoriesData[currentTrajectoryId].steps.length - 1) {
                     currentStep++;
                     updateTrajViewer();
                 } else {
@@ -437,12 +762,19 @@ $(document).ready(function() {
     // Play button event listener
     $('#play-steps').click(togglePlaySteps);
     
+    // Trajectory selector event listener
+    $('.trajectory-tab').click(function() {
+        const trajectoryId = $(this).data('trajectory-id');
+        if (trajectoryId !== currentTrajectoryId) {
+            loadTrajectory(trajectoryId);
+        }
+    });
+    
     // Handle window resize to reposition mouse indicator
     $(window).resize(function() {
         updateTrajViewer();
     });
 
     // Initialize trajectory viewer
-    generateStepList();
-    updateTrajViewer();
+    loadTrajectory(currentTrajectoryId);
 })
