@@ -552,6 +552,11 @@ body {
   margin-bottom: 0;
 }
 
+/* Remove scrollbar styles since we don't need them anymore */
+.card-content.has-fixed-height::-webkit-scrollbar {
+  display: none;
+}
+
 /* Carousel navigation */
 .slider-navigation-previous,
 .slider-navigation-next {
