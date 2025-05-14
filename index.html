@@ -404,6 +404,7 @@
       </div>
     </section>
 
+    <!-- Abstract -->
     <section class="section">
       <div class="container is-max-desktop">
         <!-- Abstract. -->
@@ -460,74 +461,6 @@
       </div>
     </section>    
     
-    <!-- Trajectory Visualization -->
-    <section class="section" id="trajectory-visualization">
-      <div class="container-fluid">
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-10">
-            <h2 class="title is-3">Computer Use Showcase</h2>
-            
-            <!-- Add trajectory selector tabs -->
-            <div class="trajectory-selector">
-              <div class="tabs">
-                <ul>
-                  <li class="trajectory-tab" data-trajectory-id="72b810ef-4156-4d09-8f08-a0cf57e7cefe">
-                    <a>Format Document</a>
-                  </li>
-                  <li class="trajectory-tab is-active" data-trajectory-id="1e8df695-bd1b-45b3-b557-e7d599cf7597">
-                    <a>Spreadsheet Calculation</a>
-                  </li>
-                  <li class="trajectory-tab" data-trajectory-id="5316686e-5688-4115-be24-052037df599f-WOS">
-                    <a>File Explorer Settings</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-            <div class="trajectory-container">
-              <div class="trajectory-sidebar">
-                <div class="user-query-section">
-                  <div class="query-marker">
-                    <span class="dot"></span>
-                    <span class="label">Task Instruction</span>
-                  </div>
-                  <div class="query-content">
-                    <p id="traj-instruction">I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?</p>
-                  </div>
-                </div>
-                
-                <ul class="step-list">
-                  <!-- Step list items will be dynamically generated here -->
-                </ul>
-              </div>
-              
-              <div class="trajectory-main">
-                <img id="traj-image" src="./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png" alt="Trajectory step 1">
-                <div id="mouse-indicator" class="mouse-indicator"></div>
-              </div>
-            </div>
-            
-            <div class="controls-container">
-              <div class="step-controls">
-                <button class="control-btn" id="prev-step" disabled>
-                  <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="control-btn" id="play-steps">
-                  <i class="fas fa-play"></i>
-                </button>
-                <button class="control-btn" id="next-step">
-                  <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="control-btn" id="replay-step">
-                  <i class="fas fa-redo"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Result--reformat tables in overleaf, paste refined images here -->
     <!-- Models: UI-TARS-7b, Operator, Qwen2.5-VL-3B, Qwen2.5-VL-7B,  Jedi-3B, Jedi-7B-->
     <!-- Models: OS-Atlas-7b, Uground-v1-7b, Aguvis-7b？-->
@@ -729,6 +662,74 @@
       </div>
     </section>
 
+    <!-- Trajectory Visualization -->
+    <section class="section" id="trajectory-visualization">
+      <div class="container-fluid">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-10">
+            <h2 class="title is-3">Computer Use Showcase</h2>
+            
+            <!-- Add trajectory selector tabs -->
+            <div class="trajectory-selector">
+              <div class="tabs">
+                <ul>
+                  <li class="trajectory-tab" data-trajectory-id="72b810ef-4156-4d09-8f08-a0cf57e7cefe">
+                    <a>Format Document</a>
+                  </li>
+                  <li class="trajectory-tab is-active" data-trajectory-id="1e8df695-bd1b-45b3-b557-e7d599cf7597">
+                    <a>Spreadsheet Calculation</a>
+                  </li>
+                  <li class="trajectory-tab" data-trajectory-id="5316686e-5688-4115-be24-052037df599f-WOS">
+                    <a>File Explorer Settings</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="trajectory-container">
+              <div class="trajectory-sidebar">
+                <div class="user-query-section">
+                  <div class="query-marker">
+                    <span class="dot"></span>
+                    <span class="label">Task Instruction</span>
+                  </div>
+                  <div class="query-content">
+                    <p id="traj-instruction">I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?</p>
+                  </div>
+                </div>
+                
+                <ul class="step-list">
+                  <!-- Step list items will be dynamically generated here -->
+                </ul>
+              </div>
+              
+              <div class="trajectory-main">
+                <img id="traj-image" src="./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png" alt="Trajectory step 1">
+                <div id="mouse-indicator" class="mouse-indicator"></div>
+              </div>
+            </div>
+            
+            <div class="controls-container">
+              <div class="step-controls">
+                <button class="control-btn" id="prev-step" disabled>
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="control-btn" id="play-steps">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn" id="next-step">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="control-btn" id="replay-step">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+        
     <!-- TODO: decide which to put for benchmark page -->
     <!-- Benchmark--three small pictures in three columns?, representing three kinds of tasks in OSWorld-G. -->
     <section class="section">
