@@ -493,34 +493,25 @@ body {
 }
 
 /* Carousel styles */
-.carousel {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-  padding: 1rem 0;
+.carousel-wrapper {
+  padding: 2rem 0;
 }
 
-/* .carousel .item {
-  padding: 0 0.75rem;
-} */
+.carousel {
+  overflow: hidden;
+}
 
 .carousel .card {
-  margin: 0;
+  margin: 0 1rem;
+  height: 100%;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  /* display: flex;
-  flex-direction: column; */
 }
 
 .carousel .card-image {
-  height: 160px;
+  height: 300px;
   overflow: hidden;
-}
-
-.carousel .card-image figure {
-  height: 100%;
-  margin: 0;
 }
 
 .carousel .card-image img {
@@ -529,45 +520,34 @@ body {
   object-fit: cover;
 }
 
-.carousel .card-content {
-  padding: 0.75rem;
-  /* flex: 1; */
+.carousel .card-content.has-fixed-height {
+  height: 120px;
+  overflow-y: auto;
+  padding: 1rem;
 }
 
-.carousel .card-content .content {
-  height: auto;
+.carousel .card-content.has-fixed-height .content {
+  height: 100%;
 }
 
-.carousel .card-content h4 {
-  margin-bottom: 0.4rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #363636;
+.carousel-item {
+  padding: 1rem;
 }
 
-.carousel .card-content p {
-  color: #4a4a4a;
-  font-size: 0.85rem;
-  line-height: 1.3;
-  margin-bottom: 0;
-}
-
-/* Remove scrollbar styles since we don't need them anymore */
+/* Custom scrollbar for the fixed height content */
 .card-content.has-fixed-height::-webkit-scrollbar {
-  display: none;
+  width: 4px;
 }
 
-/* Carousel navigation */
-.slider-navigation-previous,
-.slider-navigation-next {
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 290486px;
-  width: 2.5em;
-  height: 2.5em;
-  margin-top: -1.25em;
+.card-content.has-fixed-height::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-.slider-navigation-previous:hover,
-.slider-navigation-next:hover {
-  background: rgba(255, 255, 255, 0.9);
+.card-content.has-fixed-height::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+.card-content.has-fixed-height::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
