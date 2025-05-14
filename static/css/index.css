@@ -500,16 +500,27 @@ body {
   padding: 1rem 0;
 }
 
+.carousel .item {
+  padding: 0 0.75rem;
+}
+
 .carousel .card {
-  margin: 0 0.5rem;
+  margin: 0;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 .carousel .card-image {
-  height: 200px;
+  height: 160px;
   overflow: hidden;
+}
+
+.carousel .card-image figure {
+  height: 100%;
+  margin: 0;
 }
 
 .carousel .card-image img {
@@ -519,7 +530,8 @@ body {
 }
 
 .carousel .card-content {
-  padding: 1rem;
+  padding: 0.75rem;
+  flex: 1;
 }
 
 .carousel .card-content .content {
@@ -527,22 +539,17 @@ body {
 }
 
 .carousel .card-content h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #363636;
 }
 
 .carousel .card-content p {
   color: #4a4a4a;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  line-height: 1.3;
   margin-bottom: 0;
-}
-
-/* Remove scrollbar styles since we don't need them anymore */
-.card-content.has-fixed-height::-webkit-scrollbar {
-  display: none;
 }
 
 /* Carousel navigation */
