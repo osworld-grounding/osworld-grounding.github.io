@@ -493,16 +493,15 @@ body {
 }
 
 /* Carousel styles */
-.carousel-wrapper {
+.carousel {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
   padding: 2rem 0;
 }
 
-.carousel {
-  overflow: hidden;
-}
-
 .carousel .card {
-  margin: 0 1rem;
+  margin: 0 0.5rem;
   height: 100%;
   background: white;
   border-radius: 8px;
@@ -523,18 +522,42 @@ body {
 .carousel .card-content.has-fixed-height {
   height: 120px;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .carousel .card-content.has-fixed-height .content {
   height: 100%;
 }
 
-.carousel-item {
-  padding: 1rem;
+.carousel .card-content h4 {
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #363636;
 }
 
-/* Custom scrollbar for the fixed height content */
+.carousel .card-content p {
+  color: #4a4a4a;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Carousel navigation */
+.slider-navigation-previous,
+.slider-navigation-next {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 290486px;
+  width: 2.5em;
+  height: 2.5em;
+  margin-top: -1.25em;
+}
+
+.slider-navigation-previous:hover,
+.slider-navigation-next:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Custom scrollbar */
 .card-content.has-fixed-height::-webkit-scrollbar {
   width: 4px;
 }
