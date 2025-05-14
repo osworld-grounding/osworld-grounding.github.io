@@ -503,35 +503,55 @@ body {
 
 .carousel .card {
   margin: 0 1rem;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 400px; /* Fixed total height */
 }
 
 .carousel .card-image {
-  height: 300px;
+  flex: 0 0 240px; /* Fixed height for image section */
   overflow: hidden;
+  position: relative;
 }
 
-.carousel .card-image img {
+.carousel .card-image figure {
+  margin: 0;
   height: 100%;
   width: 100%;
-  object-fit: cover;
+}
+
+.carousel .card-image figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Changed to contain to show full image */
+  background-color: #f5f5f5; /* Light background for images */
 }
 
 .carousel .card-content.has-fixed-height {
-  height: 120px;
+  flex: 1; /* Take remaining space */
   overflow-y: auto;
-  padding: 1rem;
+  padding: 0.75rem;
 }
 
 .carousel .card-content.has-fixed-height .content {
   height: 100%;
 }
 
-.carousel-item {
-  padding: 1rem;
+.carousel .card-content.has-fixed-height h4 {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #363636;
+}
+
+.carousel .card-content.has-fixed-height p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #4a4a4a;
+  margin: 0;
 }
 
 /* Custom scrollbar for the fixed height content */
