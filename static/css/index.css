@@ -494,13 +494,27 @@ body {
 
 /* Carousel styles */
 .carousel-wrapper {
-  padding: 2rem 0;
+  padding: 0rem 0;
 }
 
 .carousel {
   overflow: hidden;
 }
 
+/* Section spacing */
+.section {
+  padding: 1.5rem 1.5rem;
+}
+
+.section .hero-body {
+  padding: 0;
+}
+
+.section .content {
+  margin-bottom: 0.5rem;
+}
+
+/* Card styles */
 .carousel .card {
   margin: 0 1rem;
   display: flex;
@@ -508,7 +522,7 @@ body {
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  height: 400px; /* Fixed total height */
+  height: 400px;
 }
 
 .carousel .card-image {
@@ -570,4 +584,78 @@ body {
 
 .card-content.has-fixed-height::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* Modal styles */
+.modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: 0 auto;
+}
+
+.modal-content .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+}
+
+.modal-content .image img {
+  max-height: 85vh;
+  width: auto;
+  object-fit: contain;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Carousel image hover effect */
+.carousel .card-image img {
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.carousel .card-image img:hover {
+  opacity: 0.9;
+}
+
+/* Carousel navigation */
+.carousel-nav {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+
+.carousel-nav a {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  color: #4a4a4a;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.carousel-nav a:hover {
+  background: white;
+  color: #363636;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure carousel items are properly spaced */
+.carousel .item {
+  padding: 0 0.5rem;
 }
