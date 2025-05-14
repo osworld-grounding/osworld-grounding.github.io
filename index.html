@@ -10,7 +10,7 @@
 
 <!-- DONE: [50min] draw a curve and a smaller table for agentic ability, add best score-->
 <!-- DONE: [10min] Change colors for our model -->
-<!-- DONE: Add osworld showcase, and we don't need title --> 
+<!-- DONE: Add osworld showcase, and we don't need title -->
 
 <!DOCTYPE html>
 <html>
@@ -459,8 +459,8 @@
         </div>
         <!--/ Updates. -->
       </div>
-    </section>    
-    
+    </section>
+
     <!-- Result--reformat tables in overleaf, paste refined images here -->
     <!-- Models: UI-TARS-7b, Operator, Qwen2.5-VL-3B, Qwen2.5-VL-7B,  Jedi-3B, Jedi-7B-->
     <!-- Models: OS-Atlas-7b, Uground-v1-7b, Aguvis-7b？-->
@@ -512,8 +512,12 @@
               }
             </style>
             <p>
-              We select several benchmarks for GUI grounding. The most commonly used benchmarks in the
-              past include <b>ScreenSpot-v2</b>, <b>ScreenSpot-Pro</b>, which focuses on high-resolution and professional software charts, and <b>OSWorld-G</b>, which we use to evaluate model performance on fine-grained and functional components.
+              We select several benchmarks for GUI grounding. The most commonly
+              used benchmarks in the
+              past include <b>ScreenSpot-v2</b>, <b>ScreenSpot-Pro</b>, which
+              focuses on high-resolution and professional software charts, and
+              <b>OSWorld-G</b>, which we use to evaluate model performance on
+              fine-grained and functional components.
             </p>
             <div class="table-container">
               <table class="comparison-table">
@@ -567,7 +571,12 @@
             </div>
             <h3 class="title is-4">Agentic Ability</h3>
             <p>
-              We evaluate our approach on two computer use benchmarks in online environments: <b></b>OSWorld</b> and <b>WindowsAgentArena</b>. We employ: (1) <b>GPT-4o</b> as the high-level planner that processes user instructions, and (2) <b>Jedi</b> as the grounding model that converts the planner's low-level instructions into executable actions.
+              We evaluate our approach on two computer use benchmarks in online
+              environments: <b>OSWorld</b> and <b>WindowsAgentArena</b>. We
+              employ: (1) <b>GPT-4o</b> as the high-level planner that processes
+              user instructions, and (2) <b>Jedi</b> as the grounding model that
+              converts the planner's low-level instructions into executable
+              actions.
             </p>
             <!-- <img src="./static/images/performance_comparison.png"
             alt="Agentic Ability" width="80%"> -->
@@ -613,18 +622,22 @@
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td class="our-model">GPT-4o + Jedi-3B (15 steps)<sup>^</sup></td>
+                    <td class="our-model">GPT-4o + Jedi-3B (15
+                      steps)<sup>^</sup></td>
                     <td>22.4 <sub>±0.33</sub></td>
                     <td>29.1 <sub>±0.57</sub></td>
                   </tr>
                   <tr>
-                    <td class="our-model">GPT-4o + Jedi-7B (100 steps)<sup>^</sup></td>
+                    <td class="our-model">GPT-4o + Jedi-7B (100
+                      steps)<sup>^</sup></td>
                     <td class="best-score">27.0 <sub>±1.81</sub></td>
                     <td class="best-score">33.7 <sub>±0.82</sub></td>
                   </tr>
                 </tbody>
               </table>
-              <p><sup>^</sup>Agentic results for Jedi are the average of four runs. More detailed results are available in the <a href="">paper</a>.</p>
+              <p><sup>^</sup>Agentic results for Jedi are the average of four
+                runs. More detailed results are available in the <a
+                  href>paper</a>.</p>
             </div>
           </div>
         </div>
@@ -638,24 +651,27 @@
         <div class="columns is-centered has-text-centered">
           <div class="column is-10">
             <h2 class="title is-3">Computer Use Showcase</h2>
-            
+
             <!-- Add trajectory selector tabs -->
             <div class="trajectory-selector">
               <div class="tabs">
                 <ul>
-                  <li class="trajectory-tab" data-trajectory-id="72b810ef-4156-4d09-8f08-a0cf57e7cefe">
+                  <li class="trajectory-tab"
+                    data-trajectory-id="72b810ef-4156-4d09-8f08-a0cf57e7cefe">
                     <a>Format Document</a>
                   </li>
-                  <li class="trajectory-tab is-active" data-trajectory-id="1e8df695-bd1b-45b3-b557-e7d599cf7597">
+                  <li class="trajectory-tab is-active"
+                    data-trajectory-id="1e8df695-bd1b-45b3-b557-e7d599cf7597">
                     <a>Spreadsheet Calculation</a>
                   </li>
-                  <li class="trajectory-tab" data-trajectory-id="5316686e-5688-4115-be24-052037df599f-WOS">
+                  <li class="trajectory-tab"
+                    data-trajectory-id="5316686e-5688-4115-be24-052037df599f-WOS">
                     <a>File Explorer Settings</a>
                   </li>
                 </ul>
               </div>
             </div>
-            
+
             <div class="trajectory-container">
               <div class="trajectory-sidebar">
                 <div class="user-query-section">
@@ -664,21 +680,26 @@
                     <span class="label">Task Instruction</span>
                   </div>
                   <div class="query-content">
-                    <p id="traj-instruction">I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?</p>
+                    <p id="traj-instruction">I am peer-reviewing my friend's
+                      course outline. I think the last paragraph is redundant so
+                      I want to add strike-through on words in the last
+                      paragraph. Can you do this for me?</p>
                   </div>
                 </div>
-                
+
                 <ul class="step-list">
                   <!-- Step list items will be dynamically generated here -->
                 </ul>
               </div>
-              
+
               <div class="trajectory-main">
-                <img id="traj-image" src="./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png" alt="Trajectory step 1">
+                <img id="traj-image"
+                  src="./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png"
+                  alt="Trajectory step 1">
                 <div id="mouse-indicator" class="mouse-indicator"></div>
               </div>
             </div>
-            
+
             <div class="controls-container">
               <div class="step-controls">
                 <button class="control-btn" id="prev-step" disabled>
@@ -699,7 +720,7 @@
         </div>
       </div>
     </section>
-        
+
     <!-- TODO: decide which to put for benchmark page -->
     <!-- Benchmark--three small pictures in three columns?, representing three kinds of tasks in OSWorld-G. -->
     <section class="section">
@@ -710,13 +731,14 @@
             <h2 class="title is-3">Benchmark: OSWorld-G</h2>
             <div class="content has-text-justified">
               <p>
-                We develop <b>OSWorld-G</b>, comprising <b></b>564</b> finely annotated
+                We develop <b>OSWorld-G</b>, comprising <b>564</b> finely
+                annotated
                 samples
                 that systematically cover text matching, element recognition,
                 layout understanding and fine-grained
                 manipulation, with annotations for the element types required to
                 solve each task. </p>
-            </div>  
+            </div>
           </div>
         </div>
       </div>
@@ -730,79 +752,93 @@
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/bench_text.png" alt="Text Matching">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/bench_text.png" alt="Text Matching">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Text Matching</h4>
-                        <p><b>Original Instruction:</b> Select "As Attachment"</p>
-                        <p><b>Refined Instruction:</b> Click "As Attachment" in the "Forward messages" dropdown menu under the "Composition" section of the Thunderbird Mail settings.</p>
-                    </div>
+                  <div class="content">
+                    <h4>Text Matching</h4>
+                    <p><b>Original Instruction:</b> Select "As Attachment"</p>
+                    <p><b>Refined Instruction:</b> Click "As Attachment" in the
+                      "Forward messages" dropdown menu under the "Composition"
+                      section of the Thunderbird Mail settings.</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/bench_icon.png" alt="Element Recognition">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/bench_icon.png"
+                      alt="Element Recognition">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Element Recognition</h4>
-                        <p><b>Original Instruction:</b> Click on Ellipse icon.</p>
-                        <p><b>Refined Instruction:</b> Click on Ellipse icon in the toolbar of LibreOffice Impress.</p>
-                    </div>
+                  <div class="content">
+                    <h4>Element Recognition</h4>
+                    <p><b>Original Instruction:</b> Click on Ellipse icon.</p>
+                    <p><b>Refined Instruction:</b> Click on Ellipse icon in the
+                      toolbar of LibreOffice Impress.</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/bench_layout.png" alt="Layout Understanding">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/bench_layout.png"
+                      alt="Layout Understanding">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Layout Understanding</h4>
-                        <p><b>Original Instruction:</b> Close the top notification bar.</p>
-                        <p><b>Refined Instruction:</b> Click the "X" button on the right side of the blue notification bar at the top of the LibreOffice Calc window.</p>
-                    </div>
+                  <div class="content">
+                    <h4>Layout Understanding</h4>
+                    <p><b>Original Instruction:</b> Close the top notification
+                      bar.</p>
+                    <p><b>Refined Instruction:</b> Click the "X" button on the
+                      right side of the blue notification bar at the top of the
+                      LibreOffice Calc window.</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/bench_fine.png" alt="Fine-grained Manipulation">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/bench_fine.png"
+                      alt="Fine-grained Manipulation">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Fine-grained Manipulation</h4>
-                        <p><b>Original Instruction:</b> Select the place between the word "Person" and the number "1".</p>
-                        <p><b>Refined Instruction:</b> Place the cursor between the word "Person" and the number "1" in the "Name your Chrome profile" text box in the Chrome settings window.</p>
-                    </div>
+                  <div class="content">
+                    <h4>Fine-grained Manipulation</h4>
+                    <p><b>Original Instruction:</b> Select the place between the
+                      word "Person" and the number "1".</p>
+                    <p><b>Refined Instruction:</b> Place the cursor between the
+                      word "Person" and the number "1" in the
+                      "Name your Chrome profile" text box in the Chrome settings
+                      window.</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/bench_refuse.png" alt="Refusal">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/bench_refuse.png" alt="Refusal">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Refusal</h4>
-                        <p><b>Instruction:</b> Click on the email address of Cindy Williams.</p>
-                    </div>
+                  <div class="content">
+                    <h4>Refusal</h4>
+                    <p><b>Instruction:</b> Click on the email address of Cindy
+                      Williams.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -810,7 +846,7 @@
         </div>
       </div>
     </section>
-    
+
     <!-- Dataset--One carousel -->
     <section class="section">
       <div class="container is-max-desktop">
@@ -830,7 +866,7 @@
         </div>
       </div>
     </section>
-    
+
     <!-- Dataset carousel -->
     <section class="section">
       <div class="hero-body">
@@ -839,121 +875,147 @@
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/icon_desc.png" alt="Icon Description">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/icon_desc.png"
+                      alt="Icon Description">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Caption Data, Icon</h4>
-                        <p>Visual Appearance: The icon is a simple, white outline of a train or subway car on a black background...Functionality: The icon labeled 'krl_access' likely represents access to a commuter rail or train service...
-                        </p>
-                    </div>
+                  <div class="content">
+                    <h4>Caption Data, Icon</h4>
+                    <p>Visual Appearance: The icon is a simple, white outline of
+                      a train or subway car on a black
+                      background...Functionality: The icon labeled 'krl_access'
+                      likely represents access to a commuter rail or train
+                      service...
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/icon_ground.png" alt="Icon Grounding">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/icon_ground.png"
+                      alt="Icon Grounding">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Grounding Data, Icon</h4>
-                        <p>Click on the icon with functionality: This icon is typically used to represent a 'density' or 'line spacing' setting in user interfaces...</p>
-                    </div>
+                  <div class="content">
+                    <h4>Grounding Data, Icon</h4>
+                    <p>Click on the icon with functionality: This icon is
+                      typically used to represent a 'density' or 'line spacing'
+                      setting in user interfaces...</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/component_render.png" alt="Component Rendering">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/component_render.png"
+                      alt="Component Rendering">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Grounding Data, Render-based Component</h4>
-                        <p>Set the skill level to 4% on the slider.</p>
-                    </div>
+                  <div class="content">
+                    <h4>Grounding Data, Render-based Component</h4>
+                    <p>Set the skill level to 4% on the slider.</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/component_doc.png" alt="Component Doc">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/component_doc.png"
+                      alt="Component Doc">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Grounding Data, Doc Component</h4>
-                        <p>Given the following text: "Vestibulum a", find the text in the document and click the space between the continuous character "t" and "i" in the text.</p>
-                    </div>
+                  <div class="content">
+                    <h4>Grounding Data, Doc Component</h4>
+                    <p>Given the following text: "Vestibulum a", find the text
+                      in the document and click the space between the continuous
+                      character "t" and "i" in the text.</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/component_slide.png" alt="Component Slide">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/component_slide.png"
+                      alt="Component Slide">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Grounding Data, Slide Component</h4>
-                        <p>Select the handle located at the top of the text box that contains the text "Presentation title."</p>
-                    </div>
+                  <div class="content">
+                    <h4>Grounding Data, Slide Component</h4>
+                    <p>Select the handle located at the top of the text box that
+                      contains the text "Presentation title."</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/component_sheet.png" alt="Component Sheet">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/component_sheet.png"
+                      alt="Component Sheet">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Grounding Data, Sheet Component</h4>
-                        <p>Navigate to top left corner of C19.</p>
-                    </div>
+                  <div class="content">
+                    <h4>Grounding Data, Sheet Component</h4>
+                    <p>Navigate to top left corner of C19.</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/layout_caption.png" alt="Layout Caption">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/layout_caption.png"
+                      alt="Layout Caption">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Caption Data, Layout</h4>
-                        <p>Visual Composition: The element consists of a horizontal strip of thumbnail images...Spatial Context: The element is located centrally below the main product image within a pop-up product detail view...User Interaction: The primary function of this element is to allow users to preview different images of the product...Element Type: Image carousel with navigation buttons."</p>
-                    </div>
+                  <div class="content">
+                    <h4>Caption Data, Layout</h4>
+                    <p>Visual Composition: The element consists of a horizontal
+                      strip of thumbnail images...Spatial Context: The element
+                      is located centrally below the main product image within a
+                      pop-up product detail view...User Interaction: The primary
+                      function of this element is to allow users to preview
+                      different images of the product...Element Type: Image
+                      carousel with navigation buttons."</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="card">
                 <div class="card-image">
-                    <figure class="image">
-                        <img src="static/images/layout_ground.png" alt="Component Doc">
-                    </figure>
+                  <figure class="image">
+                    <img src="static/images/layout_ground.png"
+                      alt="Component Doc">
+                  </figure>
                 </div>
                 <div class="card-content has-fixed-height">
-                    <div class="content">
-                        <h4>Grounding Data, Layout</h4>
-                        <p>The Text input box's intended function: The primary function of this element is to allow users to input their phone number, email, or Skype ID as part of the Microsoft account sign-in process...</p>
-                    </div>
+                  <div class="content">
+                    <h4>Grounding Data, Layout</h4>
+                    <p>The Text input box's intended function: The primary
+                      function of this element is to allow users to input their
+                      phone number, email, or Skype ID as part of the Microsoft
+                      account sign-in process...</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -967,7 +1029,7 @@
       <div class="modal-background"></div>
       <div class="modal-content">
         <p class="image">
-          <img src="" id="modalImage">
+          <img src id="modalImage">
         </p>
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
@@ -1024,7 +1086,7 @@
         });
       });
     </script>
-    
+
     <!-- BibTeX -->
     <section class="section" id="BibTeX">
       <div class="container is-max-desktop content">
