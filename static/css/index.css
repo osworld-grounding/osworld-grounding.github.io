@@ -500,17 +500,17 @@ body {
   padding: 1rem 0;
 }
 
-.carousel .item {
+/* .carousel .item {
   padding: 0 0.75rem;
-}
+} */
 
 .carousel .card {
   margin: 0;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }
 
 .carousel .card-image {
@@ -531,7 +531,7 @@ body {
 
 .carousel .card-content {
   padding: 0.75rem;
-  flex: 1;
+  /* flex: 1; */
 }
 
 .carousel .card-content .content {
