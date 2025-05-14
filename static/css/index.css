@@ -497,19 +497,18 @@ body {
   overflow: hidden;
   width: 100%;
   position: relative;
-  padding: 2rem 0;
+  padding: 1rem 0;
 }
 
 .carousel .card {
   margin: 0 0.5rem;
-  height: 100%;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .carousel .card-image {
-  height: 300px;
+  height: 200px;
   overflow: hidden;
 }
 
@@ -519,27 +518,31 @@ body {
   object-fit: cover;
 }
 
-.carousel .card-content.has-fixed-height {
-  height: 120px;
-  overflow-y: auto;
-  padding: 1.5rem;
+.carousel .card-content {
+  padding: 1rem;
 }
 
-.carousel .card-content.has-fixed-height .content {
-  height: 100%;
+.carousel .card-content .content {
+  height: auto;
 }
 
 .carousel .card-content h4 {
-  margin-bottom: 0.75rem;
-  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #363636;
 }
 
 .carousel .card-content p {
   color: #4a4a4a;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+/* Remove scrollbar styles since we don't need them anymore */
+.card-content.has-fixed-height::-webkit-scrollbar {
+  display: none;
 }
 
 /* Carousel navigation */
@@ -555,22 +558,4 @@ body {
 .slider-navigation-previous:hover,
 .slider-navigation-next:hover {
   background: rgba(255, 255, 255, 0.9);
-}
-
-/* Custom scrollbar */
-.card-content.has-fixed-height::-webkit-scrollbar {
-  width: 4px;
-}
-
-.card-content.has-fixed-height::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.card-content.has-fixed-height::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 2px;
-}
-
-.card-content.has-fixed-height::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
