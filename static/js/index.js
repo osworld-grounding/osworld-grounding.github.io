@@ -353,6 +353,122 @@ $(document).ready(function() {
     let currentStep = 0;
     let isPlaying = false;
     let playInterval = null;
+    let preloadedImages = {}; // 用于存储预加载的图片
+    let totalImagesToLoad = 0; // 需要加载的图片总数
+    let loadedImagesCount = 0; // 已加载的图片数量
+
+    // 预加载指定轨迹的所有图片
+    function preloadTrajectoryImages(trajectoryId) {
+        // 如果已经预加载了这个轨迹的图片则跳过
+        if (preloadedImages[trajectoryId]) {
+            return;
+        }
+
+        console.log(`开始预加载轨迹 ${trajectoryId} 的图片...`);
+        
+        // 创建一个对象来存储该轨迹的预加载图片
+        preloadedImages[trajectoryId] = {};
+        
+        // 获取该轨迹的所有步骤
+        const steps = trajectoriesData[trajectoryId].steps;
+        
+        // 计算本轨迹中需要加载的图片数量
+        let trajectoryImagesCount = 0;
+        steps.forEach(step => {
+            if (step.image) {
+                trajectoryImagesCount++;
+            }
+        });
+        
+        console.log(`轨迹 ${trajectoryId} 共有 ${trajectoryImagesCount} 张图片需要加载`);
+        
+        // 遍历所有步骤并预加载图片
+        steps.forEach((step, index) => {
+            if (step.image) {
+                const img = new Image();
+                img.src = step.image;
+                preloadedImages[trajectoryId][index] = img;
+                
+                // 添加加载完成事件监听器
+                img.onload = function() {
+                    loadedImagesCount++;
+                    updateLoadingProgress();
+                    console.log(`预加载完成: ${step.image} (${loadedImagesCount}/${totalImagesToLoad})`);
+                };
+                
+                // 添加加载错误事件监听器
+                img.onerror = function() {
+                    loadedImagesCount++;
+                    updateLoadingProgress();
+                    console.error(`预加载失败: ${step.image}`);
+                };
+            }
+        });
+    }
+
+    // 显示加载指示器
+    function showLoadingIndicator() {
+        // 检查是否已经有加载指示器，没有则创建
+        if ($('#loading-indicator').length === 0) {
+            const loadingHtml = `
+                <div id="loading-indicator" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px; z-index: 1000; display: flex; flex-direction: column; align-items: center;">
+                    <div>加载图片中...</div>
+                    <div id="loading-progress" style="margin-top: 5px;">0/${totalImagesToLoad}</div>
+                    <div style="width: 100%; background: #444; height: 5px; margin-top: 5px;">
+                        <div id="loading-bar" style="width: 0%; background: #4CAF50; height: 100%;"></div>
+                    </div>
+                </div>
+            `;
+            $('body').append(loadingHtml);
+        } else {
+            $('#loading-indicator').show();
+            $('#loading-progress').text(`0/${totalImagesToLoad}`);
+            $('#loading-bar').css('width', '0%');
+        }
+    }
+
+    // 更新加载进度
+    function updateLoadingProgress() {
+        const percentage = (loadedImagesCount / totalImagesToLoad) * 100;
+        $('#loading-progress').text(`${loadedImagesCount}/${totalImagesToLoad}`);
+        $('#loading-bar').css('width', `${percentage}%`);
+        
+        // 如果全部加载完成，隐藏加载指示器
+        if (loadedImagesCount >= totalImagesToLoad) {
+            setTimeout(function() {
+                $('#loading-indicator').fadeOut(500);
+            }, 1000);
+        }
+    }
+
+    // 预加载所有轨迹的图片
+    function preloadAllTrajectoryImages() {
+        console.log('开始预加载所有轨迹图片...');
+        
+        // 先计算所有图片的总数
+        totalImagesToLoad = 0;
+        loadedImagesCount = 0;
+        
+        // 计算所有轨迹的总图片数
+        Object.keys(trajectoriesData).forEach(trajectoryId => {
+            const steps = trajectoriesData[trajectoryId].steps;
+            steps.forEach(step => {
+                if (step.image) {
+                    totalImagesToLoad++;
+                }
+            });
+        });
+        
+        console.log(`总共有 ${totalImagesToLoad} 张图片需要加载`);
+        
+        // 显示加载指示器
+        showLoadingIndicator();
+        
+        // 开始预加载每个轨迹
+        Object.keys(trajectoriesData).forEach(trajectoryId => {
+            preloadTrajectoryImages(trajectoryId);
+        });
+    }
 
     // Function to load and display a specific trajectory
     function loadTrajectory(trajectoryId) {
@@ -361,6 +477,27 @@ $(document).ready(function() {
         isPlaying = false;
         currentStep = 0;
         currentTrajectoryId = trajectoryId;
+        
+        // 如果还没有预加载这个轨迹的图片
+        if (!preloadedImages[trajectoryId]) {
+            // 重置计数器
+            totalImagesToLoad = 0;
+            loadedImagesCount = 0;
+            
+            // 计算这个轨迹的图片总数
+            const steps = trajectoriesData[trajectoryId].steps;
+            steps.forEach(step => {
+                if (step.image) {
+                    totalImagesToLoad++;
+                }
+            });
+            
+            // 显示加载指示器
+            showLoadingIndicator();
+            
+            // 预加载当前轨迹的图片
+            preloadTrajectoryImages(trajectoryId);
+        }
         
         // Update active tab
         $('.trajectory-tab').removeClass('is-active');
@@ -481,7 +618,24 @@ $(document).ready(function() {
         const step = trajectoriesData[currentTrajectoryId].steps[currentStep];
         
         // Update main image
-        $('#traj-image').attr('src', step.image);
+        // 如果有预加载的图片就使用预加载的，否则直接设置src
+        if (preloadedImages[currentTrajectoryId] && preloadedImages[currentTrajectoryId][currentStep]) {
+            const preloadedImg = preloadedImages[currentTrajectoryId][currentStep];
+            // 确保图片已经加载完成
+            if (preloadedImg.complete) {
+                $('#traj-image').attr('src', preloadedImg.src);
+            } else {
+                // 如果图片还没有加载完成，设置加载事件
+                preloadedImg.onload = function() {
+                    $('#traj-image').attr('src', preloadedImg.src);
+                };
+                // 同时也设置src以防图片加载失败
+                $('#traj-image').attr('src', step.image);
+            }
+        } else {
+            // 如果没有预加载则直接设置src
+            $('#traj-image').attr('src', step.image);
+        }
         
         // Update button states
         $('#prev-step').prop('disabled', currentStep === 0);
@@ -815,4 +969,7 @@ $(document).ready(function() {
 
     // Initialize trajectory viewer
     loadTrajectory(currentTrajectoryId);
+    
+    // 启动时预加载所有轨迹的图片
+    preloadAllTrajectoryImages();
 })
