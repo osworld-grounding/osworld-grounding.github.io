@@ -392,53 +392,16 @@ $(document).ready(function() {
                 // 添加加载完成事件监听器
                 img.onload = function() {
                     loadedImagesCount++;
-                    updateLoadingProgress();
                     console.log(`预加载完成: ${step.image} (${loadedImagesCount}/${totalImagesToLoad})`);
                 };
                 
                 // 添加加载错误事件监听器
                 img.onerror = function() {
                     loadedImagesCount++;
-                    updateLoadingProgress();
                     console.error(`预加载失败: ${step.image}`);
                 };
             }
         });
-    }
-
-    // 显示加载指示器
-    function showLoadingIndicator() {
-        // 检查是否已经有加载指示器，没有则创建
-        if ($('#loading-indicator').length === 0) {
-            const loadingHtml = `
-                <div id="loading-indicator" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px; z-index: 1000; display: flex; flex-direction: column; align-items: center;">
-                    <div>加载图片中...</div>
-                    <div id="loading-progress" style="margin-top: 5px;">0/${totalImagesToLoad}</div>
-                    <div style="width: 100%; background: #444; height: 5px; margin-top: 5px;">
-                        <div id="loading-bar" style="width: 0%; background: #4CAF50; height: 100%;"></div>
-                    </div>
-                </div>
-            `;
-            $('body').append(loadingHtml);
-        } else {
-            $('#loading-indicator').show();
-            $('#loading-progress').text(`0/${totalImagesToLoad}`);
-            $('#loading-bar').css('width', '0%');
-        }
-    }
-
-    // 更新加载进度
-    function updateLoadingProgress() {
-        const percentage = (loadedImagesCount / totalImagesToLoad) * 100;
-        $('#loading-progress').text(`${loadedImagesCount}/${totalImagesToLoad}`);
-        $('#loading-bar').css('width', `${percentage}%`);
-        
-        // 如果全部加载完成，隐藏加载指示器
-        if (loadedImagesCount >= totalImagesToLoad) {
-            setTimeout(function() {
-                $('#loading-indicator').fadeOut(500);
-            }, 1000);
-        }
     }
 
     // 预加载所有轨迹的图片
@@ -460,9 +423,6 @@ $(document).ready(function() {
         });
         
         console.log(`总共有 ${totalImagesToLoad} 张图片需要加载`);
-        
-        // 显示加载指示器
-        showLoadingIndicator();
         
         // 开始预加载每个轨迹
         Object.keys(trajectoriesData).forEach(trajectoryId => {
@@ -491,9 +451,6 @@ $(document).ready(function() {
                     totalImagesToLoad++;
                 }
             });
-            
-            // 显示加载指示器
-            showLoadingIndicator();
             
             // 预加载当前轨迹的图片
             preloadTrajectoryImages(trajectoryId);
@@ -970,6 +927,14 @@ $(document).ready(function() {
     // Initialize trajectory viewer
     loadTrajectory(currentTrajectoryId);
     
-    // 启动时预加载所有轨迹的图片
-    preloadAllTrajectoryImages();
+    // 修改预加载顺序，先预加载当前选择的轨迹，然后再预加载其他轨迹
+    // 预加载当前轨迹
+    preloadTrajectoryImages(currentTrajectoryId);
+    
+    // 然后预加载其他轨迹
+    Object.keys(trajectoriesData).forEach(trajectoryId => {
+        if (trajectoryId !== currentTrajectoryId) {
+            setTimeout(() => preloadTrajectoryImages(trajectoryId), 500);
+        }
+    });
 })
