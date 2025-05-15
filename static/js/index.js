@@ -124,46 +124,7 @@ $(document).ready(function() {
 
     // Trajectory visualization
     const trajectoriesData = {
-        // Document formatting trajectory
-        "72b810ef-4156-4d09-8f08-a0cf57e7cefe": {
-            id: "72b810ef-4156-4d09-8f08-a0cf57e7cefe",
-            steps: [
-                {
-                    stepNum: 1,
-                    action: "# Select the last paragraph by clicking and dragging from the start to the end of the paragraph\npyautogui.click(657, 639,  duration=1)",
-                    response: "I need to add strikethrough formatting to the last paragraph in this document.\n\nFirst, I need to select the text of the last paragraph:\n1. I can see that the document has multiple paragraphs of text\n2. The last paragraph appears to start with 'Each student will be responsible for...' and continues to the end of the visible text\n3. To select this paragraph, I'll position my cursor at the beginning of the paragraph\n\nI'll click at coordinates (657, 639) which appears to be at the beginning of the last paragraph.",
-                    description: "Select the paragraph",
-                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_0_20250503@074819.png",
-                    mouseAction: { type: "click", x: 657, y: 639 }
-                },
-                {
-                    stepNum: 2,
-                    action: "# Click and drag to select the entire last paragraph\npyautogui.dragTo(657, 739, duration=1, button='left')",
-                    response: "Now that I've positioned my cursor at the beginning of the last paragraph, I need to select all the text in this paragraph:\n\n1. I'll drag from the current position (where I just clicked) down to the end of the paragraph\n2. I need to click and hold the left mouse button while dragging to select the text\n3. The paragraph appears to end around position (657, 739)\n\nI'll drag from the current position to (657, 739) to select the entire paragraph text. This will allow me to apply the strikethrough formatting to the whole paragraph in the next step.",
-                    description: "Drag to select the text",
-                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png",
-                    mouseAction: { type: "drag", startX: 657, startY: 639, endX: 657, endY: 739 }
-                },
-                {
-                    stepNum: 3,
-                    action: "# Click the strikethrough button in the toolbar\npyautogui.click(813, 146,  duration=1)",
-                    response: "Now that I have selected the entire paragraph, I need to apply the strikethrough formatting:\n\n1. Looking at the toolbar at the top of the LibreOffice Writer window\n2. I can see various formatting options including bold, italic, underline, etc.\n3. The strikethrough button appears to be located at coordinates (813, 146)\n4. This button will apply the strikethrough formatting to the selected text\n\nI'll click on the strikethrough button in the toolbar. This will apply strikethrough formatting to the selected paragraph, indicating that it's redundant as requested.",
-                    description: "Apply strikethrough formatting",
-                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_2_20250503@074853.png",
-                    mouseAction: { type: "click", x: 813, y: 146 }
-                },
-                {
-                    stepNum: 4,
-                    action: "DONE",
-                    response: "I've successfully completed the task of applying strikethrough formatting to the last paragraph:\n\n1. I identified the last paragraph in the document\n2. I selected the entire paragraph by clicking at its beginning and dragging to its end\n3. I applied strikethrough formatting by clicking the strikethrough button in the toolbar\n4. The formatting has been applied correctly, and the paragraph now appears with a line through it\n\nThe task is now complete. The strikethrough formatting visually indicates that the paragraph is redundant as requested in the peer review process.",
-                    description: "Task completed",
-                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_3_20250503@074916.png",
-                    mouseAction: null
-                }
-            ],
-            instruction: "I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?"
-        },
-        
+
         // Spreadsheet calculation trajectory
         "1e8df695-bd1b-45b3-b557-e7d599cf7597": {
             id: "1e8df695-bd1b-45b3-b557-e7d599cf7597",
@@ -227,7 +188,44 @@ $(document).ready(function() {
             ],
             instruction: "Add a new column named \"Profit\" and calculate the profit for each week by subtracting \"COGS\" from \"Sales\" in that column."
         },
-        
+        "72b810ef-4156-4d09-8f08-a0cf57e7cefe": {
+            id: "72b810ef-4156-4d09-8f08-a0cf57e7cefe",
+            steps: [
+                {
+                    stepNum: 1,
+                    action: "# Select the last paragraph by clicking and dragging from the start to the end of the paragraph\npyautogui.click(657, 639,  duration=1)",
+                    response: "I need to add strikethrough formatting to the last paragraph in this document.\n\nFirst, I need to select the text of the last paragraph:\n1. I can see that the document has multiple paragraphs of text\n2. The last paragraph appears to start with 'Each student will be responsible for...' and continues to the end of the visible text\n3. To select this paragraph, I'll position my cursor at the beginning of the paragraph\n\nI'll click at coordinates (657, 639) which appears to be at the beginning of the last paragraph.",
+                    description: "Select the paragraph",
+                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_0_20250503@074819.png",
+                    mouseAction: { type: "click", x: 657, y: 639 }
+                },
+                {
+                    stepNum: 2,
+                    action: "# Click and drag to select the entire last paragraph\npyautogui.dragTo(657, 739, duration=1, button='left')",
+                    response: "Now that I've positioned my cursor at the beginning of the last paragraph, I need to select all the text in this paragraph:\n\n1. I'll drag from the current position (where I just clicked) down to the end of the paragraph\n2. I need to click and hold the left mouse button while dragging to select the text\n3. The paragraph appears to end around position (657, 739)\n\nI'll drag from the current position to (657, 739) to select the entire paragraph text. This will allow me to apply the strikethrough formatting to the whole paragraph in the next step.",
+                    description: "Drag to select the text",
+                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_1_20250503@074835.png",
+                    mouseAction: { type: "drag", startX: 657, startY: 639, endX: 657, endY: 739 }
+                },
+                {
+                    stepNum: 3,
+                    action: "# Click the strikethrough button in the toolbar\npyautogui.click(813, 146,  duration=1)",
+                    response: "Now that I have selected the entire paragraph, I need to apply the strikethrough formatting:\n\n1. Looking at the toolbar at the top of the LibreOffice Writer window\n2. I can see various formatting options including bold, italic, underline, etc.\n3. The strikethrough button appears to be located at coordinates (813, 146)\n4. This button will apply the strikethrough formatting to the selected text\n\nI'll click on the strikethrough button in the toolbar. This will apply strikethrough formatting to the selected paragraph, indicating that it's redundant as requested.",
+                    description: "Apply strikethrough formatting",
+                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_2_20250503@074853.png",
+                    mouseAction: { type: "click", x: 813, y: 146 }
+                },
+                {
+                    stepNum: 4,
+                    action: "DONE",
+                    response: "I've successfully completed the task of applying strikethrough formatting to the last paragraph:\n\n1. I identified the last paragraph in the document\n2. I selected the entire paragraph by clicking at its beginning and dragging to its end\n3. I applied strikethrough formatting by clicking the strikethrough button in the toolbar\n4. The formatting has been applied correctly, and the paragraph now appears with a line through it\n\nThe task is now complete. The strikethrough formatting visually indicates that the paragraph is redundant as requested in the peer review process.",
+                    description: "Task completed",
+                    image: "./static/trajs/72b810ef-4156-4d09-8f08-a0cf57e7cefe/step_3_20250503@074916.png",
+                    mouseAction: null
+                }
+            ],
+            instruction: "I am peer-reviewing my friend's course outline. I think the last paragraph is redundant so I want to add strike-through on words in the last paragraph. Can you do this for me?"
+        },
         // File explorer settings trajectory
         "5316686e-5688-4115-be24-052037df599f-WOS": {
             id: "5316686e-5688-4115-be24-052037df599f-WOS",
@@ -353,6 +351,72 @@ $(document).ready(function() {
     let currentStep = 0;
     let isPlaying = false;
     let playInterval = null;
+    let preloadedImages = {}; // 用于存储预加载的图片
+    let totalImagesToLoad = 0; // 需要加载的图片总数
+    let loadedImagesCount = 0; // 已加载的图片数量
+
+    // 预加载指定轨迹的所有图片
+    function preloadTrajectoryImages(trajectoryId) {
+        // 如果已经预加载了这个轨迹的图片则跳过
+        if (preloadedImages[trajectoryId]) {
+            return;
+        }
+        
+        // 创建一个对象来存储该轨迹的预加载图片
+        preloadedImages[trajectoryId] = {};
+        
+        // 获取该轨迹的所有步骤
+        const steps = trajectoriesData[trajectoryId].steps;
+        
+        // 计算本轨迹中需要加载的图片数量
+        let trajectoryImagesCount = 0;
+        steps.forEach(step => {
+            if (step.image) {
+                trajectoryImagesCount++;
+            }
+        });
+        
+        // 遍历所有步骤并预加载图片
+        steps.forEach((step, index) => {
+            if (step.image) {
+                const img = new Image();
+                img.src = step.image;
+                preloadedImages[trajectoryId][index] = img;
+                
+                // 添加加载完成事件监听器
+                img.onload = function() {
+                    loadedImagesCount++;
+                };
+                
+                // 添加加载错误事件监听器
+                img.onerror = function() {
+                    loadedImagesCount++;
+                };
+            }
+        });
+    }
+
+    // 预加载所有轨迹的图片
+    function preloadAllTrajectoryImages() {
+        // 先计算所有图片的总数
+        totalImagesToLoad = 0;
+        loadedImagesCount = 0;
+        
+        // 计算所有轨迹的总图片数
+        Object.keys(trajectoriesData).forEach(trajectoryId => {
+            const steps = trajectoriesData[trajectoryId].steps;
+            steps.forEach(step => {
+                if (step.image) {
+                    totalImagesToLoad++;
+                }
+            });
+        });
+        
+        // 开始预加载每个轨迹
+        Object.keys(trajectoriesData).forEach(trajectoryId => {
+            preloadTrajectoryImages(trajectoryId);
+        });
+    }
 
     // Function to load and display a specific trajectory
     function loadTrajectory(trajectoryId) {
@@ -361,6 +425,24 @@ $(document).ready(function() {
         isPlaying = false;
         currentStep = 0;
         currentTrajectoryId = trajectoryId;
+        
+        // 如果还没有预加载这个轨迹的图片
+        if (!preloadedImages[trajectoryId]) {
+            // 重置计数器
+            totalImagesToLoad = 0;
+            loadedImagesCount = 0;
+            
+            // 计算这个轨迹的图片总数
+            const steps = trajectoriesData[trajectoryId].steps;
+            steps.forEach(step => {
+                if (step.image) {
+                    totalImagesToLoad++;
+                }
+            });
+            
+            // 预加载当前轨迹的图片
+            preloadTrajectoryImages(trajectoryId);
+        }
         
         // Update active tab
         $('.trajectory-tab').removeClass('is-active');
@@ -481,7 +563,24 @@ $(document).ready(function() {
         const step = trajectoriesData[currentTrajectoryId].steps[currentStep];
         
         // Update main image
-        $('#traj-image').attr('src', step.image);
+        // 如果有预加载的图片就使用预加载的，否则直接设置src
+        if (preloadedImages[currentTrajectoryId] && preloadedImages[currentTrajectoryId][currentStep]) {
+            const preloadedImg = preloadedImages[currentTrajectoryId][currentStep];
+            // 确保图片已经加载完成
+            if (preloadedImg.complete) {
+                $('#traj-image').attr('src', preloadedImg.src);
+            } else {
+                // 如果图片还没有加载完成，设置加载事件
+                preloadedImg.onload = function() {
+                    $('#traj-image').attr('src', preloadedImg.src);
+                };
+                // 同时也设置src以防图片加载失败
+                $('#traj-image').attr('src', step.image);
+            }
+        } else {
+            // 如果没有预加载则直接设置src
+            $('#traj-image').attr('src', step.image);
+        }
         
         // Update button states
         $('#prev-step').prop('disabled', currentStep === 0);
@@ -815,4 +914,15 @@ $(document).ready(function() {
 
     // Initialize trajectory viewer
     loadTrajectory(currentTrajectoryId);
+    
+    // 修改预加载顺序，先预加载当前选择的轨迹，然后再预加载其他轨迹
+    // 预加载当前轨迹
+    preloadTrajectoryImages(currentTrajectoryId);
+    
+    // 然后预加载其他轨迹
+    Object.keys(trajectoriesData).forEach(trajectoryId => {
+        if (trajectoryId !== currentTrajectoryId) {
+            setTimeout(() => preloadTrajectoryImages(trajectoryId), 500);
+        }
+    });
 })
