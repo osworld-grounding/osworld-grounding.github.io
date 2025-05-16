@@ -716,10 +716,11 @@
             </div>
             <sup>
               <p>
-              Example trajectories of the agent using <b>GPT-4o +
-          Jedi-7B</b> completing tasks from <b>OSWorld</b> and <b>WindowsAgentArena</b>.
-      </p>
-    </sup>
+                Example trajectories of the agent using <b>GPT-4o +
+                  Jedi-7B</b> completing tasks from <b>OSWorld</b> and
+                <b>WindowsAgentArena</b>.
+              </p>
+            </sup>
           </div>
         </div>
       </div>
@@ -743,6 +744,70 @@
                 manipulation, with annotations for the element types required to
                 solve each task. </p>
             </div>
+            <div class="table-container">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Agent Model</th>
+                    <th>Text Matching</th>
+                    <th>Element Recognition</th>
+                    <th>Layout Understanding</th>
+                    <th>Fine-grained Manipulation</th>
+                    <th>Refusal</th>
+                    <th>Overall</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="model-name">UI-TARS-7B</td>
+                    <td>60.2</td>
+                    <td>51.8</td>
+                    <td>54.9</td>
+                    <td>35.6</td>
+                    <td>0.0</td>
+                    <td>47.5</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Gemini-2.5-Pro</td>
+                    <td>59.8</td>
+                    <td>45.5</td>
+                    <td>49.0</td>
+                    <td>33.6</td>
+                    <td class="best-score">38.9</td>
+                    <td>45.2</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Operator</td>
+                    <td>51.3</td>
+                    <td>42.4</td>
+                    <td>46.6</td>
+                    <td>31.5</td>
+                    <td>0.0</td>
+                    <td>40.6</td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">JeDi-3B</td>
+                    <td class="best-score">67.4</td>
+                    <td>53.0</td>
+                    <td>53.8</td>
+                    <td>44.3</td>
+                    <td>7.4</td>
+                    <td>50.9</td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">JeDi-7B</td>
+                    <td>65.9</td>
+                    <td class="best-score">55.5</td>
+                    <td class="best-score">57.7</td>
+                    <td class="best-score">46.9</td>
+                    <td>7.4</td>
+                    <td class="best-score">54.1</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- TODO: add a table here -->
+
           </div>
         </div>
       </div>
