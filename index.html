@@ -60,6 +60,20 @@
         overflow-y: auto; /* Add scrollbar when content exceeds max-height */
       }
 
+      .card-content.has-fixed-height {
+        overflow: hidden !important; /* Remove scrollbar */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      
+      .card-content.has-fixed-height::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+      }
+      
+      .card .content {
+        overflow: hidden !important;
+      }
+
       .step-action-details code {
         display: inline-block; 
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
