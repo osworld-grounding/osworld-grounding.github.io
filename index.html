@@ -351,13 +351,12 @@
                 </a>
               </span> -->
                   <span class="link-block">
-                    <!-- <a href="https://arxiv.org/abs/2011.12948" -->
-                    <a
+                    <a href="https://arxiv.org/abs/2505.13227"
                       class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                         <i class="ai ai-arxiv"></i>
                       </span>
-                      <span>Paper (Coming Soon)</span>
+                      <span>Paper</span>
                     </a>
                   </span>
                   <!-- Code Link. -->
@@ -427,7 +426,8 @@
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>
-                GUI Grounding, the ability to map natural language instructions
+                GUI Grounding, the ability to map natural language
+                instructions
                 to specific actions on graphical user interfaces, remains a
                 critical bottleneck in computer use agent development. Current
                 benchmarks oversimplify grounding tasks as short referring
@@ -435,23 +435,29 @@
                 interactions that require software commonsense, layout
                 understanding, and fine-grained manipulation capabilities.To
                 address these limitations, we introduce <b>OSWorld-G</b>, a
-                comprehensive benchmark comprising 564 finely annotated samples
+                comprehensive benchmark comprising 564 finely annotated
+                samples
                 across diverse task types including text matching, element
                 recognition, layout understanding, and precise manipulation.
-                Additionally, we synthesize and release the largest computer use
-                grounding dataset <b>Jedi</b>, which contains 4 million examples
+                Additionally, we synthesize and release the largest computer
+                use
+                grounding dataset <b>Jedi</b>, which contains 4 million
+                examples
                 through multi-perspective decoupling of tasks. Our multi-scale
                 models trained on Jedi demonstrate its effectiveness by
                 outperforming existing approaches on ScreenSpot-v2,
                 ScreenSpot-Pro, and our new benchmark. Furthermore, we
-                demonstrate that improved grounding with Jedi directly enhances
+                demonstrate that improved grounding with Jedi directly
+                enhances
                 agentic capabilities of general foundation models on complex
                 computer tasks, improving from 5% to <b>27%</b> in OSWorld.
                 Through detailed ablation studies, we identify key factors
-                contributing to grounding performance and verify that combining
+                contributing to grounding performance and verify that
+                combining
                 specialized data for different interface elements enables
                 compositional generalization to novel interfaces. All data,
-                checkpoints, and code are open-sourced and available for future
+                checkpoints, and code are open-sourced and available for
+                future
                 research.
               </p>
             </div>
@@ -526,7 +532,8 @@
               }
             </style>
             <p>
-              We select several benchmarks for GUI grounding. The most commonly
+              We select several benchmarks for GUI grounding. The most
+              commonly
               used benchmarks in the
               past include <b>ScreenSpot-v2</b>, <b>ScreenSpot-Pro</b>, which
               focuses on high-resolution and professional software charts, and
@@ -585,10 +592,13 @@
             </div>
             <h3 class="title is-4">Agentic Ability</h3>
             <p>
-              We evaluate our approach on two computer use benchmarks in online
+              We evaluate our approach on two computer use benchmarks in
+              online
               environments: <b>OSWorld</b> and <b>WindowsAgentArena</b>. We
-              employ: (1) <b>GPT-4o</b> as the high-level planner that processes
-              user instructions, and (2) <b>Jedi</b> as the grounding model that
+              employ: (1) <b>GPT-4o</b> as the high-level planner that
+              processes
+              user instructions, and (2) <b>Jedi</b> as the grounding model
+              that
               converts the planner's low-level instructions into executable
               actions.
             </p>
@@ -693,7 +703,8 @@
                   </div>
                   <div class="query-content">
                     <p id="traj-instruction">I am peer-reviewing my friend's
-                      course outline. I think the last paragraph is redundant so
+                      course outline. I think the last paragraph is redundant
+                      so
                       I want to add strike-through on words in the last
                       paragraph. Can you do this for me?</p>
                   </div>
@@ -755,7 +766,8 @@
                 samples
                 that systematically cover text matching, element recognition,
                 layout understanding and fine-grained
-                manipulation, with annotations for the element types required to
+                manipulation, with annotations for the element types required
+                to
                 solve each task. </p>
             </div>
             <div class="table-container">
@@ -836,14 +848,16 @@
               <div class="card">
                 <div class="card-image">
                   <figure class="image">
-                    <img src="static/images/bench_text.png" alt="Text Matching">
+                    <img src="static/images/bench_text.png"
+                      alt="Text Matching">
                   </figure>
                 </div>
                 <div class="card-content has-fixed-height">
                   <div class="content">
                     <h4>Text Matching</h4>
                     <p><b>Original Instruction:</b> Select "As Attachment"</p>
-                    <p><b>Refined Instruction:</b> Click "As Attachment" in the
+                    <p><b>Refined Instruction:</b> Click "As Attachment" in
+                      the
                       "Forward messages" dropdown menu under the "Composition"
                       section of the Thunderbird Mail settings.</p>
                   </div>
@@ -862,7 +876,8 @@
                   <div class="content">
                     <h4>Element Recognition</h4>
                     <p><b>Original Instruction:</b> Click on Ellipse icon.</p>
-                    <p><b>Refined Instruction:</b> Click on Ellipse icon in the
+                    <p><b>Refined Instruction:</b> Click on Ellipse icon in
+                      the
                       toolbar of LibreOffice Impress.</p>
                   </div>
                 </div>
@@ -882,7 +897,8 @@
                     <p><b>Original Instruction:</b> Close the top notification
                       bar.</p>
                     <p><b>Refined Instruction:</b> Click the "X" button on the
-                      right side of the blue notification bar at the top of the
+                      right side of the blue notification bar at the top of
+                      the
                       LibreOffice Calc window.</p>
                   </div>
                 </div>
@@ -899,11 +915,14 @@
                 <div class="card-content has-fixed-height">
                   <div class="content">
                     <h4>Fine-grained Manipulation</h4>
-                    <p><b>Original Instruction:</b> Select the place between the
+                    <p><b>Original Instruction:</b> Select the place between
+                      the
                       word "Person" and the number "1".</p>
-                    <p><b>Refined Instruction:</b> Place the cursor between the
+                    <p><b>Refined Instruction:</b> Place the cursor between
+                      the
                       word "Person" and the number "1" in the
-                      "Name your Chrome profile" text box in the Chrome settings
+                      "Name your Chrome profile" text box in the Chrome
+                      settings
                       window.</p>
                   </div>
                 </div>
@@ -966,9 +985,11 @@
                 <div class="card-content has-fixed-height">
                   <div class="content">
                     <h4>Caption Data, Icon</h4>
-                    <p>Visual Appearance: The icon is a simple, white outline of
+                    <p>Visual Appearance: The icon is a simple, white outline
+                      of
                       a train or subway car on a black
-                      background...Functionality: The icon labeled 'krl_access'
+                      background...Functionality: The icon labeled
+                      'krl_access'
                       likely represents access to a commuter rail or train
                       service...
                     </p>
@@ -988,7 +1009,8 @@
                   <div class="content">
                     <h4>Grounding Data, Icon</h4>
                     <p>Click on the icon with functionality: This icon is
-                      typically used to represent a 'density' or 'line spacing'
+                      typically used to represent a 'density' or
+                      'line spacing'
                       setting in user interfaces...</p>
                   </div>
                 </div>
@@ -1022,7 +1044,8 @@
                   <div class="content">
                     <h4>Grounding Data, Doc Component</h4>
                     <p>Given the following text: "Vestibulum a", find the text
-                      in the document and click the space between the continuous
+                      in the document and click the space between the
+                      continuous
                       character "t" and "i" in the text.</p>
                   </div>
                 </div>
@@ -1039,7 +1062,8 @@
                 <div class="card-content has-fixed-height">
                   <div class="content">
                     <h4>Grounding Data, Slide Component</h4>
-                    <p>Select the handle located at the top of the text box that
+                    <p>Select the handle located at the top of the text box
+                      that
                       contains the text "Presentation title."</p>
                   </div>
                 </div>
@@ -1072,10 +1096,13 @@
                 <div class="card-content has-fixed-height">
                   <div class="content">
                     <h4>Caption Data, Layout</h4>
-                    <p>Visual Composition: The element consists of a horizontal
+                    <p>Visual Composition: The element consists of a
+                      horizontal
                       strip of thumbnail images...Spatial Context: The element
-                      is located centrally below the main product image within a
-                      pop-up product detail view...User Interaction: The primary
+                      is located centrally below the main product image within
+                      a
+                      pop-up product detail view...User Interaction: The
+                      primary
                       function of this element is to allow users to preview
                       different images of the product...Element Type: Image
                       carousel with navigation buttons."</p>
@@ -1095,8 +1122,10 @@
                   <div class="content">
                     <h4>Grounding Data, Layout</h4>
                     <p>The Text input box's intended function: The primary
-                      function of this element is to allow users to input their
-                      phone number, email, or Skype ID as part of the Microsoft
+                      function of this element is to allow users to input
+                      their
+                      phone number, email, or Skype ID as part of the
+                      Microsoft
                       account sign-in process...</p>
                   </div>
                 </div>
@@ -1174,7 +1203,16 @@
     <section class="section" id="BibTeX">
       <div class="container is-max-desktop content">
         <h2 class="title">BibTeX</h2>
-        <pre><code>TODO: add arxiv link</code></pre>
+        <p>If you find this work useful, please consider citing our paper:</p>
+        <pre><code>@misc{xie2025scalingcomputerusegroundinguser,
+      title={Scaling Computer-Use Grounding via User Interface Decomposition and Synthesis}, 
+      author={Tianbao Xie and Jiaqi Deng and Xiaochuan Li and Junlin Yang and Haoyuan Wu and Jixuan Chen and Wenjing Hu and Xinyuan Wang and Yuhui Xu and Zekun Wang and Yiheng Xu and Junli Wang and Doyen Sahoo and Tao Yu and Caiming Xiong},
+      year={2025},
+      eprint={2505.13227},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2505.13227}, 
+}</code></pre>
       </div>
     </section>
 
