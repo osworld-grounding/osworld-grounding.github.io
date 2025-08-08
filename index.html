@@ -647,27 +647,38 @@
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td>GPT-4o + Aguvis-72B (15 steps)</td>
+                    <td>Aguvis-72B w/ GPT-4o (15 steps)</td>
                     <td>17.0</td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td class="our-model">GPT-4o + Jedi-3B (15
+                    <td class="our-model">Jedi-3B w/ GPT-4o (15
                       steps)<sup>^</sup></td>
                     <td>22.4 <sub>±0.33</sub></td>
                     <td>29.1 <sub>±0.57</sub></td>
                   </tr>
                   <tr>
-                    <td class="our-model">GPT-4o + Jedi-7B (100
+                    <td class="our-model">Jedi-7B w/ GPT-4o (100
                       steps)<sup>^</sup></td>
                     <td class="best-score">27.0 <sub>±1.81</sub></td>
                     <td class="best-score">33.7 <sub>±0.82</sub></td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">Jedi-7B w/ o3 (100
+                      steps)<sup>^</sup></td>
+                    <td class="best-score">50.2 <sub>±0.83</sub></td>
+                    <!-- <td class="best-score">33.7 <sub>±0.82</sub></td> -->
+                    <td>-</td>
                   </tr>
                 </tbody>
               </table>
               <p><sup>^</sup>Agentic results for Jedi are the average of four
                 runs. More detailed results are available in the <a
                   href="https://arxiv.org/abs/2505.13227">paper</a>.</p>
+            </div>
+            <p>The figure below illustrates the performance of <b>Jedi-7B w/ o3</b> on OSWorld, where the maximum number of steps is set to 100. We present how performance varies with the number of steps for both <b>Pass@4</b> and <b>Avg@4</b> metrics. </p>
+            <div style="margin-top: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+              <canvas id="jedi-o3-chart" style="width: 100%; height: 500px;"></canvas>
             </div>
           </div>
         </div>
@@ -1273,6 +1284,147 @@
         </div>
       </div>
     </footer>
+
+    <!-- Chart.js for Jedi o3 Performance Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Load and parse the CSV data
+        fetch('./static/data/jedi_o3_stats.csv')
+          .then(response => response.text())
+          .then(data => {
+            const lines = data.trim().split('\n');
+            const headers = lines[0].split(',');
+            const rows = lines.slice(1);
+            
+            const steps = [];
+            const pass4Scores = [];
+            const singleRunScores = [];
+            
+            rows.forEach(row => {
+              const cols = row.split(',');
+              if (cols.length >= 3 && !isNaN(cols[0])) {
+                steps.push(parseInt(cols[0]));
+                pass4Scores.push(parseFloat(cols[1]));
+                singleRunScores.push(parseFloat(cols[2]));
+              }
+            });
+            
+            // Create the chart
+            const chartElement = document.getElementById('jedi-o3-chart');
+            
+            if (chartElement && typeof Chart !== 'undefined') {
+              const ctx = chartElement.getContext('2d');
+              new Chart(ctx, {
+                type: 'line',
+                data: {
+                  labels: steps,
+                  datasets: [
+                    {
+                      label: 'Pass@4',
+                      data: pass4Scores,
+                      borderColor: '#999999',
+                      backgroundColor: 'rgba(153, 153, 153, 0.1)',
+                      borderDash: [5, 5],
+                      tension: 0.1,
+                      pointRadius: 0,
+                      pointHoverRadius: 0
+                    },
+                    {
+                      label: 'Avg@4',
+                      data: singleRunScores,
+                      borderColor: '#1a1a74',
+                      backgroundColor: 'rgba(26, 26, 116, 0.1)',
+                      tension: 0.1,
+                      pointRadius: 0,
+                      pointHoverRadius: 0
+                    }
+                  ]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  layout: {
+                    padding: 0
+                  },
+                  plugins: {
+                    legend: {
+                      display: true,
+                      labels: {
+                        usePointStyle: true,
+                        pointStyle: 'line',
+                        pointStyleWidth: 30,
+                        generateLabels: function(chart) {
+                          const original = Chart.defaults.plugins.legend.labels.generateLabels;
+                          const labels = original.call(this, chart);
+                          
+                          labels.forEach((label, index) => {
+                            if (index === 0) {
+                              // Pass@4 - use dashed line style
+                              label.pointStyle = 'line';
+                              label.lineDash = [5, 5];
+                              label.lineWidth = 3;
+                            } else {
+                              // Avg@4 - use solid line style  
+                              label.pointStyle = 'line';
+                              label.lineDash = [];
+                              label.lineWidth = 3;
+                            }
+                          });
+                          
+                          return labels;
+                        }
+                      }
+                    },
+                    tooltip: {
+                      enabled: false
+                    }
+                  },
+                  scales: {
+                    x: {
+                      type: 'linear',
+                      display: true,
+                      title: {
+                        display: true,
+                        text: 'Steps'
+                      },
+                      min: 0,
+                      max: 100,
+                      border: {
+                        display: false
+                      }
+                    },
+                    y: {
+                      display: true,
+                      min: 0,
+                      max: 75,
+                      ticks: {
+                        callback: function(value) {
+                          // Don't show the top label (75)
+                          if (value === 75) {
+                            return '';
+                          }
+                          return value;
+                        }
+                      },
+                      title: {
+                        display: true,
+                        text: 'OS SR (%)'
+                      },
+                      border: {
+                        display: false
+                      }
+                    }
+                  }
+                }
+              });
+            }
+          })
+          .catch(error => {
+            console.error('Error loading CSV data:', error);
+          });
+      });
+    </script>
 
     <!-- <script>
       bulmaCarousel.attach('#results-carousel', {
